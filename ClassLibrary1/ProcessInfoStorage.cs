@@ -6,7 +6,7 @@ using System.Text;
 namespace ClassLibrary1
 {
     public class ProcessInfoStorage:IProcessStorage<ProcessInfoCategory>
-    {
+    {// TODO: Normalize data for charts
         private Dictionary<string, ProcessInfoCategory> data= new Dictionary<string,ProcessInfoCategory>();
         public bool ContainsKey(string key)
         {
