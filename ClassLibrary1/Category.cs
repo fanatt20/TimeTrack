@@ -5,46 +5,37 @@ using ClassLibrary1;
 
 namespace ClassLibrary1
 {
-    class ProcessInfoCategory<T> : IProcessInfoCategory, IProcessStorage<T> where T : IProcessInfo
+   public class ProcessInfoCategory : IProcessInfoCategory
     {
         #region IRecord implementation
-        public string Name { get; set; }
-        public void Sum(ProcessInfoCategory<T> category)
+        public string CategoryName { get; set; }
+        public void Sum(IProcessInfoCategory category)
         {
-            if (Name == category.Name)
+            if (CategoryName == category.CategoryName)
             {
-                foreach (var item in category.Data)
+                foreach (ProcessInfo item in category)
                 {
-                    if (_data.ContainsKey(item.Key) && _data[item.Key].StartTime == item.Value.StartTime)
-                        _data[item.Key].Sum(item.Value);
+                    if (_data.ContainsKey(item.Name) && _data[item.Name].StartTime == item.StartTime)
+                        _data[item.Name].Sum(item);
                     else
-                        _data.Add(item.Key, item.Value);
+                        _data.Add(item.Name, item);
                 }
             }
         }
-        public TimeSpan Duration { get { return _processDuration ?? GetGlobalTime(); } }
-        public void SetProcessDuration(TimeSpan value) { _processDuration = value; }
-        public DateTime StartTime { get; }
-        public void StartTime(DateTime value) { _processStartTime = value; }
         #endregion
         #region System variables
-        DateTime _processStartTime;
         TimeSpan? _processDuration = null;
-        Dictionary<string, T> _data;
+        Dictionary<string, ProcessInfo> _data= new Dictionary<string,ProcessInfo>();
         #endregion
-        public T this[string key]
-        {
-            get { if (_data.ContainsKey(key)) return _data[key]; else throw new ArgumentOutOfRangeException(); }
-        }
 
-        public Dictionary<string, T> Data { get { return _data ?? CreateDictionary(); } }
-        private Dictionary<string, T> CreateDictionary()
+        public Dictionary<string, ProcessInfo> Data { get { return _data ?? CreateDictionary(); } }
+        private Dictionary<string, ProcessInfo> CreateDictionary()
         {
-            _data = new Dictionary<string, T>();
+            _data = new Dictionary<string, ProcessInfo>();
             return _data;
         }
 
-        public void AddToCollection(string key, T record)
+        public void AddToCollection(string key, ProcessInfo record)
         {
             if (key != null)
                 if (_data.ContainsKey(key) && record.StartTime == _data[key].StartTime)
@@ -65,7 +56,7 @@ namespace ClassLibrary1
         }
         public override string ToString()
         {
-            var result = Name + "\n";
+            var result = CategoryName + "\n";
 
             foreach (var item in Data)
             {
@@ -77,21 +68,64 @@ namespace ClassLibrary1
         public ProcessInfoCategory()
         {
             _processDuration = null;
-            _data = null;
-            Name = "Default";
+            _data = new Dictionary<string, ProcessInfo>();
+            CategoryName = "Default";
         }
-        public ProcessInfoCategory(TimeSpan ts, string name)
+        public ProcessInfoCategory(string name)
         {
-            _processDuration = ts;
-            _data = null;
-            Name = name;
+            _processDuration = null;
+            CreateDictionary();
+            CategoryName = name;
         }
-        public ProcessInfoCategory(IProcessInfo record)
+        public ProcessInfoCategory(ProcessInfoCategory record)
         {
-            _data = null;
-            _processDuration = record.Duration;
-            Name = record.Name;
+            _data = record._data;
+            CategoryName = record.CategoryName;
         }
 
+
+        public TimeSpan CategoryDuration
+        { get { return _processDuration ?? GetGlobalTime(); } }
+
+
+        public bool ContainsKey(string key)
+        {
+            return _data.ContainsKey(key);
+        }
+
+        public bool ContainsValue(ProcessInfo value)
+        {
+            return _data.ContainsValue(value);
+        }
+
+        public bool ContainsPair(string key, ProcessInfo value)
+        {
+            return ContainsKey(key) && ContainsValue(value);
+        }
+
+
+        ProcessInfo IProcessStorage<ProcessInfo>.this[string key]
+        {
+            get { if ((_data).ContainsKey(key)) return _data[key]; else throw new ArgumentOutOfRangeException(); }
+        }
+
+        public IEnumerator<ProcessInfo> GetEnumerator()
+        {
+            return _data.Values.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        public void Dispose()
+        {
+            if (_data != null)
+            {
+                _data.Clear();
+                _data = null;
+            }
+        }
     }
 }

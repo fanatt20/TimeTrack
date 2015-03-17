@@ -6,40 +6,41 @@ using System.Diagnostics;
 using System.Threading;
 namespace ClassLibrary1
 {
-    interface IProcessInfo
-    { 
-        public string Name { get; set; }
-        public TimeSpan Duration { get; set; }
-        public DateTime StartTime { get; set; }
-        public void SetRecord(string name, TimeSpan duration, DateTime processStartTime);
-        public void Sum(IProcessInfo other);
-    }
-    interface IProcessInfoCategory : IProcessStorage<IProcessInfo>
+    public interface IProcessInfo
     {
-        public TimeSpan CategoryDuration { get; }
-        public string CategoryName { get; set; }
+        string Name { get; set; }
+        TimeSpan Duration { get; set; }
+        DateTime StartTime { get; set; }
+        void SetRecord(string name, TimeSpan duration, DateTime processStartTime);
+        void Sum(IProcessInfo other);
     }
-    interface IProcessStorage<T> : IEnumerable<T>, IDisposable where T:new()
+    public interface IProcessInfoCategory : IProcessStorage<ProcessInfo>
     {
-        public bool ContainsKey(string key);
-        public bool ContainsValue(T value);
-        public bool ContainsPair(string key, T value);
-        public void AddToCollection(string name, T record);
-        public void Sum(IProcessStorage<T> other);
-        public T this[string key] { get; }
+        string CategoryName { get; set; }
+        TimeSpan CategoryDuration { get; }
+        void Sum(IProcessInfoCategory other);
+
     }
-    interface IProcessInfoGenerator
+    public interface IProcessStorage<T> : IEnumerable<T>, IDisposable where T : new()
+    {
+        bool ContainsKey(string key);
+        bool ContainsValue(T value);
+        bool ContainsPair(string key, T value);
+        void AddToCollection(string name, T record);
+        T this[string key] { get; }
+    }
+    public interface IProcessInfoGenerator
     {
         //public Process GetActiveWindowAsProcess();
         //можно, но есть привязка к реализации через класс System.Diagnostics.Process
         // мне больше нравится получать конкретные данные
-        public int GetCurrentProcessId();
-        public string GetCurrentProcessName();
-        public TimeSpan GetCurrentProcessTime();
-        public string GetCurrentProcessTitle();
-        public bool GetStartTimeOfCurrentProcess(out DateTime dateTime );
+        int GetCurrentProcessId();
+        string GetCurrentProcessName();
+        TimeSpan GetCurrentProcessTime();
+        string GetCurrentProcessTitle();
+        bool GetStartTimeOfCurrentProcess(out DateTime dateTime);
     }
-    class ProcessInfoEventArgs:EventArgs
+    public class ProcessInfoEventArgs : EventArgs
     {
         private readonly string windowTitle, processName;
         private readonly TimeSpan duration;
@@ -54,12 +55,9 @@ namespace ClassLibrary1
         public TimeSpan Duration { get { return duration; } }
 
     }
-    interface IProcessInfoHandler<T>// как ограничить Т на ICategory && IRecord?
+    public interface IProcessInfoHandler<T> where T : class, IProcessInfoCategory, new()// как ограничить Т на ICategory && IRecord?
     {
-        public delegate void ProcessInfoEventHandler(Object sender, ProcessInfoEventArgs e);
-        public event ProcessInfoEventHandler StorageHasUpdated;
-
-        public void StartTrack(IProcessInfoGenerator generator, IProcessStorage<T> collection, int intervals);
-        public void FinishTrack();
+        void StartTrack(IProcessInfoGenerator generator, IProcessStorage<T> collection, int intervals);
+        void FinishTrack();
     }
 }

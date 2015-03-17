@@ -10,14 +10,14 @@ using ClassLibrary1;
 
 namespace ClassLibrary1
 {
-    class ProcessInfoGenerator : IProcessInfoGenerator
+    public class ProcessInfoGenerator : IProcessInfoGenerator
     {
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
         [DllImport("user32", SetLastError = true)]
         internal static extern int GetWindowThreadProcessId([In]IntPtr hwnd, [Out]out int lProcessId);
 
-        public new int GetCurrentProcessId()
+        public int GetCurrentProcessId()
         {
             int lProcessId;
             IntPtr handle = GetForegroundWindow();

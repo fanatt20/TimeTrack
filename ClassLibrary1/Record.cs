@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ClassLibrary1
 {
-    class ProcessInfo : IProcessInfo
+    public class ProcessInfo : IProcessInfo
     {
         #region Properties
         public string Name { get; set; }
@@ -41,9 +41,11 @@ namespace ClassLibrary1
         {
             return "Process: " + Name + "\tbegin in: " + StartTime + "\twith duration: " + Duration + ".\n";
         }
-        static public implicit operator ProcessInfoCategory<ProcessInfo>(ProcessInfo record)
+
+
+        public void Sum(IProcessInfo other)
         {
-            return new ProcessInfoCategory<ProcessInfo>(record);
+            Sum((ProcessInfo)other);
         }
     }
 }
