@@ -18,9 +18,9 @@ namespace WinFormsInterface
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
         Filters filters;
-        ProcessInfoStorage data= new ProcessInfoStorage();
-        ProcessInfoGenerator gen=new ProcessInfoGenerator();
-        ProcessInfoHandler handler= new ProcessInfoHandler();
+        ProcessInfoStorage data = new ProcessInfoStorage();
+        ProcessInfoGenerator gen = new ProcessInfoGenerator();
+        ProcessInfoHandler handler = new ProcessInfoHandler();
         private BackgroundWorker backgroundWorker1;
         private Thread demoThread;
 
@@ -35,13 +35,14 @@ namespace WinFormsInterface
             filters = new Filters(data);
             filters.Show();
             filters.FormClosed += new FormClosedEventHandler(ClosedSubForm);
-            
+
             //this.Visible = true;
-           // Application.Run(new Filters());
+            // Application.Run(new Filters());
         }
         private void ClosedSubForm(object sender, EventArgs e)
         {
             this.Show();
+            sender = null;
         }
         private void OnExit(object sender, EventArgs e)
         {
@@ -102,9 +103,14 @@ namespace WinFormsInterface
         private void button1_Click_1(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
+            CategorysGrid.Rows.Clear();
             foreach (var item in data)
+            {
+                CategorysGrid.Rows.Add(item.CategoryName, item.CategoryDuration);
+
                 foreach (var record in item)
-                    dataGridView1.Rows.Add(record.Name, record.Duration, item.CategoryName);
+                    dataGridView1.Rows.Add(item.CategoryName, record.Name, record.Duration);
+            }
         }
     }
 }

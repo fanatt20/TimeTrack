@@ -85,7 +85,7 @@ namespace ClassLibrary1
 
 
         public TimeSpan CategoryDuration
-        { get { return _processDuration ?? GetGlobalTime(); } }
+        { get { return GetGlobalTime(); } }
 
 
         public bool ContainsKey(string key)

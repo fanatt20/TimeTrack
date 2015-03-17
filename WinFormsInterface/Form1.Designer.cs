@@ -33,17 +33,21 @@
             this.BeginTrackButton = new System.Windows.Forms.Button();
             this.FinishTrackButton = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
+            this.CategorysGrid = new System.Windows.Forms.DataGridView();
+            this.Group = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CategorysGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // CurrentProcessButton
             // 
             this.CurrentProcessButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.CurrentProcessButton.Location = new System.Drawing.Point(12, 236);
+            this.CurrentProcessButton.Location = new System.Drawing.Point(12, 266);
             this.CurrentProcessButton.Name = "CurrentProcessButton";
             this.CurrentProcessButton.Size = new System.Drawing.Size(113, 39);
             this.CurrentProcessButton.TabIndex = 0;
@@ -54,7 +58,7 @@
             // HideInTrayButton
             // 
             this.HideInTrayButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.HideInTrayButton.Location = new System.Drawing.Point(369, 236);
+            this.HideInTrayButton.Location = new System.Drawing.Point(375, 266);
             this.HideInTrayButton.Name = "HideInTrayButton";
             this.HideInTrayButton.Size = new System.Drawing.Size(113, 39);
             this.HideInTrayButton.TabIndex = 1;
@@ -65,7 +69,7 @@
             // BeginTrackButton
             // 
             this.BeginTrackButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BeginTrackButton.Location = new System.Drawing.Point(131, 236);
+            this.BeginTrackButton.Location = new System.Drawing.Point(137, 266);
             this.BeginTrackButton.Name = "BeginTrackButton";
             this.BeginTrackButton.Size = new System.Drawing.Size(113, 39);
             this.BeginTrackButton.TabIndex = 3;
@@ -76,7 +80,7 @@
             // FinishTrackButton
             // 
             this.FinishTrackButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.FinishTrackButton.Location = new System.Drawing.Point(250, 236);
+            this.FinishTrackButton.Location = new System.Drawing.Point(256, 266);
             this.FinishTrackButton.Name = "FinishTrackButton";
             this.FinishTrackButton.Size = new System.Drawing.Size(113, 39);
             this.FinishTrackButton.TabIndex = 4;
@@ -86,41 +90,22 @@
             // 
             // dataGridView1
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ProcessName,
             this.Key,
-            this.Value,
-            this.ProcessName});
+            this.Value});
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(591, 218);
+            this.dataGridView1.Size = new System.Drawing.Size(350, 248);
             this.dataGridView1.TabIndex = 5;
-            // 
-            // Key
-            // 
-            this.Key.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Key.FillWeight = 300F;
-            this.Key.HeaderText = "Name";
-            this.Key.Name = "Key";
-            // 
-            // Value
-            // 
-            this.Value.HeaderText = "Wasted Time";
-            this.Value.Name = "Value";
-            // 
-            // ProcessName
-            // 
-            this.ProcessName.HeaderText = "Process Name";
-            this.ProcessName.Name = "ProcessName";
             // 
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Location = new System.Drawing.Point(490, 236);
+            this.button1.Location = new System.Drawing.Point(494, 266);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(113, 39);
             this.button1.TabIndex = 6;
@@ -128,13 +113,54 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // Main
+            // CategorysGrid
+            // 
+            this.CategorysGrid.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.CategorysGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.CategorysGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Group,
+            this.Time});
+            this.CategorysGrid.Location = new System.Drawing.Point(368, 12);
+            this.CategorysGrid.Name = "CategorysGrid";
+            this.CategorysGrid.Size = new System.Drawing.Size(239, 248);
+            this.CategorysGrid.TabIndex = 7;
+            // 
+            // Group
+            // 
+            this.Group.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Group.HeaderText = "Group";
+            this.Group.Name = "Group";
+            // 
+            // Time
+            // 
+            this.Time.HeaderText = "Time";
+            this.Time.Name = "Time";
+            // 
+            // ProcessName
+            // 
+            this.ProcessName.HeaderText = "Process Name";
+            this.ProcessName.Name = "ProcessName";
+            // 
+            // Key
+            // 
+            this.Key.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Key.FillWeight = 300F;
+            this.Key.HeaderText = "Process Title";
+            this.Key.Name = "Key";
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "Wasted Time";
+            this.Value.Name = "Value";
+            // 
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(615, 287);
+            this.ClientSize = new System.Drawing.Size(619, 317);
+            this.Controls.Add(this.CategorysGrid);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.FinishTrackButton);
@@ -142,9 +168,10 @@
             this.Controls.Add(this.HideInTrayButton);
             this.Controls.Add(this.CurrentProcessButton);
             this.MinimumSize = new System.Drawing.Size(506, 326);
-            this.Name = "Main";
+            this.Name = "MainWindow";
             this.Text = "TimeSpy";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CategorysGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -156,10 +183,13 @@
         private System.Windows.Forms.Button BeginTrackButton;
         private System.Windows.Forms.Button FinishTrackButton;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProcessName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Key;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProcessName;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView CategorysGrid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Group;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Time;
     }
 }
 
