@@ -75,7 +75,6 @@
             this.chart1.Size = new System.Drawing.Size(414, 233);
             this.chart1.TabIndex = 3;
             this.chart1.Text = "chart1";
-            this.chart1.Click += new System.EventHandler(this.Filters_VisibleChanged);
             // 
             // Filters
             // 
