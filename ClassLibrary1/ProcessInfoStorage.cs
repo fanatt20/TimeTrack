@@ -63,5 +63,11 @@ namespace ClassLibrary1
             }
             return result;
         }
+
+
+        public ProcessInfoCategory[] GetCollection()
+        {
+            return data.Values.ToArray<ProcessInfoCategory>();
+        }
     }
 }

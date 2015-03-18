@@ -102,20 +102,43 @@ namespace WinFormsInterface
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Clear();
-            CategorysGrid.Rows.Clear();
-            foreach (var item in data)
-            {
-                CategorysGrid.Rows.Add(item.CategoryName, item.CategoryDuration);
+            treeView1.Nodes.Clear();
+            List<TreeNode> listTreeNode1 = new List<TreeNode>();
 
-                foreach (var record in item)
-                    dataGridView1.Rows.Add(item.CategoryName, record.Name, record.Duration);
+            foreach (var category in data.GetCollection())
+            {
+                foreach (var record in category)
+                    listTreeNode1.Add(new TreeNode(record.ToString()));
+
+                treeView1.Nodes.Add(new TreeNode(category.CategoryName, listTreeNode1.ToArray()));
+                listTreeNode1.Clear();
             }
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
+
+        private void ExportButton_Click(object sender, EventArgs e)
+        {
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text File|.txt";
+            saveFileDialog.Title = "Save an Text File";
+            saveFileDialog.ShowDialog();
+
+            // If the file name is not an empty string open it for saving.
+            if (saveFileDialog.FileName != "")
+            {
+                // Saves the Image via a FileStream created by the OpenFile method.
+                System.IO.StreamWriter fs = new System.IO.StreamWriter(
+                   (System.IO.FileStream)saveFileDialog.OpenFile());
+                foreach (var record in data)
+                    fs.Write(record.ToString() + "\n");
+                fs.Close();
+            }
+        }
+
     }
 }

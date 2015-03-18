@@ -5,9 +5,8 @@ using ClassLibrary1;
 
 namespace ClassLibrary1
 {
-   public class ProcessInfoCategory : IProcessInfoCategory
+    public class ProcessInfoCategory : IProcessInfoCategory
     {
-        #region IRecord implementation
         public string CategoryName { get; set; }
         public void Sum(IProcessInfoCategory category)
         {
@@ -15,17 +14,17 @@ namespace ClassLibrary1
             {
                 foreach (ProcessInfo item in category)
                 {
-                    if (_data.ContainsKey(item.Name) && _data[item.Name].StartTime == item.StartTime)
+                    if (_data.ContainsKey(item.Name))
                         _data[item.Name].Sum(item);
                     else
                         _data.Add(item.Name, item);
                 }
             }
         }
-        #endregion
+
         #region System variables
         TimeSpan? _processDuration = null;
-        Dictionary<string, ProcessInfo> _data= new Dictionary<string,ProcessInfo>();
+        Dictionary<string, ProcessInfo> _data = new Dictionary<string, ProcessInfo>();
         #endregion
 
         public Dictionary<string, ProcessInfo> Data { get { return _data ?? CreateDictionary(); } }
@@ -38,7 +37,7 @@ namespace ClassLibrary1
         public void AddToCollection(string key, ProcessInfo record)
         {
             if (key != null)
-                if (_data.ContainsKey(key) && record.StartTime == _data[key].StartTime)
+                if (_data.ContainsKey(key))
                     _data[key].Sum(record);
                 else
                     _data.Add(key, record);
@@ -50,7 +49,8 @@ namespace ClassLibrary1
         {
             var result = new TimeSpan();
             foreach (var item in _data)
-                result += item.Value.Duration;
+                foreach (var duration in item.Value.GetTimeSpanCollection())
+                    result += duration;
             _processDuration = result;
             return result;
         }
@@ -71,11 +71,26 @@ namespace ClassLibrary1
             _data = new Dictionary<string, ProcessInfo>();
             CategoryName = "Default";
         }
-        public ProcessInfoCategory(string name)
+        public ProcessInfoCategory(string name, params ProcessInfo[] a)
         {
             _processDuration = null;
             CreateDictionary();
             CategoryName = name;
+            foreach (var item in a)
+            {
+                if (!Data.ContainsKey(item.Name))
+                    Data.Add(item.Name, item);
+                else
+                    Data[item.Name].Sum(item);
+            }
+        }
+        public ProcessInfoCategory(string name, ProcessInfo a)
+        {
+            _processDuration = null;
+            CreateDictionary();
+            Data.Add(a.Name, a);
+            CategoryName = name;
+            
         }
         public ProcessInfoCategory(ProcessInfoCategory record)
         {
@@ -126,6 +141,12 @@ namespace ClassLibrary1
                 _data.Clear();
                 _data = null;
             }
+        }
+
+
+        public ProcessInfo[] GetCollection()
+        {
+            return Data.Values.ToArray<ProcessInfo>();
         }
     }
 }

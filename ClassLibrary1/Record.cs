@@ -9,43 +9,90 @@ namespace ClassLibrary1
     {
         #region Properties
         public string Name { get; set; }
-        public TimeSpan Duration { get; set; }
-        public DateTime StartTime { get; set; }
+        SortedList<DateTime, TimeSpan> lst;
+        
         #endregion
 
         #region Constructors
         public ProcessInfo()
         {
             Name = "Default";
-            Duration = new TimeSpan();
-            StartTime = DateTime.Now;
+            lst = new SortedList<DateTime, TimeSpan>();
+            lst.Add(DateTime.Now, new TimeSpan());
         }
-        public ProcessInfo(string name, TimeSpan time)
+        public ProcessInfo(string name, TimeSpan duration,DateTime startTime)
         {
             Name = name;
-            Duration = time;
-            StartTime = DateTime.Now;
+            lst = new SortedList<DateTime, TimeSpan>();
+            lst.Add(startTime, duration);
         }
         #endregion
-        public void Sum(ProcessInfo left)
+        public void Sum(ProcessInfo right)
         {
-            if (Name.Equals(left.Name) && StartTime.Equals(left.StartTime))
-                Duration += left.Duration;
+            TimeSpan buff;
+            if(Name.Equals(right.Name))
+            {
+                foreach( var key in right.GetDateTimeCollection())
+                {
+                    if (lst.TryGetValue(key, out buff))
+                        lst[key] += right[key];
+                    else
+                        lst.Add(key, right[key]);
+                }
+            }
         }
         public void SetRecord(string name, TimeSpan duration, DateTime processStartTime){
         Name =name;
-        Duration = duration;
-        StartTime = processStartTime;
+        lst.Add(processStartTime, duration);
         }
         public override string ToString()
         {
-            return "Process: " + Name + "\tbegin in: " + StartTime + "\twith duration: " + Duration + ".\n";
+            var result = "Process:"+Name;
+            foreach (var keyValuePair in lst)
+                result += "\t start in: " + keyValuePair.Key + "\t with duration: " + keyValuePair.Value + ".\n";
+
+            return result;
         }
 
 
         public void Sum(IProcessInfo other)
         {
             Sum((ProcessInfo)other);
+        }
+
+
+        public DateTime[] GetDateTimeCollection()
+        {
+            return lst.Keys.ToArray<DateTime>();
+        }
+
+        public TimeSpan[] GetTimeSpanCollection()
+        {
+            return lst.Values.ToArray<TimeSpan>();
+        }
+
+
+        public TimeSpan this[DateTime key]
+        {
+            get
+            {
+                return lst[key];
+            }
+            set
+            {
+                lst[key] = value;
+            }
+        }
+
+
+        public bool ContainsKey(DateTime key)
+        {
+            return lst.ContainsKey(key);
+        }
+
+        public bool ContainsValue(TimeSpan value)
+        {
+            return lst.ContainsValue(value);
         }
     }
 }

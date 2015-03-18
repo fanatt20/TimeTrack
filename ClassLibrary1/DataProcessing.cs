@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace ClassLibrary1
 {
-   public class ProcessInfoHandler: IProcessInfoHandler<ProcessInfoCategory>
+    public class ProcessInfoHandler : IProcessInfoHandler<ProcessInfoCategory>,IDisposable
     {
         public delegate void ProcessInfoEventHandler(Object sender, ProcessInfoEventArgs e);
         public event ProcessInfoEventHandler StorageHasUpdated;
@@ -31,47 +31,37 @@ namespace ClassLibrary1
             if (nameProcess == null || nameProcess == "")
                 nameProcess = "Nothing";
             string currentWindowTitle = gen.GetCurrentProcessTitle();
+
+            if (nameProcess == "explorer" && currentWindowTitle == "") // Desktop don't have title
+                currentWindowTitle = "Desktop";
+
+            DateTime dt;
+            if (!gen.GetStartTimeOfCurrentProcess(out dt))
+                dt = DateTime.Now;
+
             if (coll.ContainsKey(nameProcess))
             {
-                var Category=coll[nameProcess];
-                    if (Category.ContainsKey(gen.GetCurrentProcessTitle()))
-                        (Category as IProcessInfoCategory)[currentWindowTitle] .Duration += new TimeSpan(0, 0, interval);
-                    else
-                    {
-                        Category.AddToCollection(currentWindowTitle, new ProcessInfo(currentWindowTitle, new TimeSpan(0, 0, interval)));
-                        //неправильно, но что поделать, надо заменить ProcessInfo на абстакцию
-                        DateTime dt;
-                        if (gen.GetStartTimeOfCurrentProcess(out dt))
-                            (Category as IProcessInfoCategory)[currentWindowTitle].StartTime = dt;
-                        else
-                            (Category as IProcessInfoCategory)[currentWindowTitle].StartTime = DateTime.Now;
-                    }
 
-                
+
+                if (coll[nameProcess].ContainsKey(currentWindowTitle))
+                    (coll[nameProcess] as IProcessInfoCategory)[currentWindowTitle].Sum(new ProcessInfo(currentWindowTitle, new TimeSpan(0, 0, interval), dt));
+                else
+                    (coll[nameProcess] as IProcessInfoCategory).AddToCollection(currentWindowTitle, new ProcessInfo(currentWindowTitle, new TimeSpan(0, 0, interval), dt));
+
+
             }
             else
-            {
-                coll.AddToCollection(nameProcess, new ProcessInfoCategory(nameProcess));
-
-                //coll[nameProcess].AddToCollection(currentWindowTitle, new ProcessInfo(currentWindowTitle,new TimeSpan(0,0,interval)));
-                coll[nameProcess].Data.Add(currentWindowTitle, new ProcessInfo(currentWindowTitle, new TimeSpan(0, 0, interval)));
-                //та же тема
-                DateTime dt;
-                if (gen.GetStartTimeOfCurrentProcess(out dt))
-                    (coll[nameProcess] as IProcessInfoCategory)[currentWindowTitle].StartTime = dt;
-                else
-                    (coll[nameProcess] as IProcessInfoCategory)[currentWindowTitle].StartTime = DateTime.Now;
-            }
-          //  DateTime date;
-            //if (gen.GetStartTimeOfCurrentProcess(out date))
-              //  (coll[nameProcess] as IProcessInfoCategory).[currentWindowTitle].StartTime = date;
-           // else
-             //   (coll[nameProcess] as IProcessInfoCategory)[currentWindowTitle].StartTime = DateTime.Now;
-
+                coll.AddToCollection(nameProcess, new ProcessInfoCategory(nameProcess, new ProcessInfo(currentWindowTitle, new TimeSpan(0, 0, interval), dt)));
             //StorageHasUpdated(this, new ProcessInfoEventArgs(currentWindowTitle, nameProcess, new TimeSpan(0, 0, interval)));
-
         }
         public void FinishTrack()
+        {
+            Dispose();
+        }
+
+
+
+        public void Dispose()
         {
             if (timer != null)
             {
@@ -80,12 +70,11 @@ namespace ClassLibrary1
             }
             if (coll != null)
             {
-               coll = null;
+                coll = null;
             }
             if (gen != null)
                 gen = null;
             GC.Collect();
         }
-
     }
 }

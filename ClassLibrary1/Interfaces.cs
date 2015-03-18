@@ -9,10 +9,13 @@ namespace ClassLibrary1
     public interface IProcessInfo
     {
         string Name { get; set; }
-        TimeSpan Duration { get; set; }
-        DateTime StartTime { get; set; }
+        DateTime[] GetDateTimeCollection();
+        bool ContainsKey(DateTime key);
+        bool ContainsValue(TimeSpan value);
+        TimeSpan[] GetTimeSpanCollection();
         void SetRecord(string name, TimeSpan duration, DateTime processStartTime);
         void Sum(IProcessInfo other);
+        TimeSpan this[DateTime key] { get; set; }
     }
     public interface IProcessInfoCategory : IProcessStorage<ProcessInfo>
     {
@@ -27,6 +30,7 @@ namespace ClassLibrary1
         bool ContainsValue(T value);
         bool ContainsPair(string key, T value);
         void AddToCollection(string name, T record);
+        T[] GetCollection();
         T this[string key] { get; }
     }
     public interface IProcessInfoGenerator
