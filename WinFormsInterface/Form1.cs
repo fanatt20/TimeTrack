@@ -112,5 +112,10 @@ namespace WinFormsInterface
                     dataGridView1.Rows.Add(item.CategoryName, record.Name, record.Duration);
             }
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

@@ -33,15 +33,21 @@
             this.BeginTrackButton = new System.Windows.Forms.Button();
             this.FinishTrackButton = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.CategorysGrid = new System.Windows.Forms.DataGridView();
             this.Group = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CategorysGrid)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // CurrentProcessButton
@@ -51,7 +57,7 @@
             this.CurrentProcessButton.Name = "CurrentProcessButton";
             this.CurrentProcessButton.Size = new System.Drawing.Size(113, 39);
             this.CurrentProcessButton.TabIndex = 0;
-            this.CurrentProcessButton.Text = "Categories";
+            this.CurrentProcessButton.Text = "Chart";
             this.CurrentProcessButton.UseVisualStyleBackColor = true;
             this.CurrentProcessButton.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -97,10 +103,28 @@
             this.ProcessName,
             this.Key,
             this.Value});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(350, 248);
+            this.dataGridView1.Size = new System.Drawing.Size(587, 222);
             this.dataGridView1.TabIndex = 5;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // ProcessName
+            // 
+            this.ProcessName.HeaderText = "Process Name";
+            this.ProcessName.Name = "ProcessName";
+            // 
+            // Key
+            // 
+            this.Key.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Key.FillWeight = 300F;
+            this.Key.HeaderText = "Process Title";
+            this.Key.Name = "Key";
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "Wasted Time";
+            this.Value.Name = "Value";
             // 
             // button1
             // 
@@ -120,9 +144,9 @@
             this.CategorysGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Group,
             this.Time});
-            this.CategorysGrid.Location = new System.Drawing.Point(368, 12);
+            this.CategorysGrid.Location = new System.Drawing.Point(0, 0);
             this.CategorysGrid.Name = "CategorysGrid";
-            this.CategorysGrid.Size = new System.Drawing.Size(239, 248);
+            this.CategorysGrid.Size = new System.Drawing.Size(587, 222);
             this.CategorysGrid.TabIndex = 7;
             // 
             // Group
@@ -136,22 +160,37 @@
             this.Time.HeaderText = "Time";
             this.Time.Name = "Time";
             // 
-            // ProcessName
+            // tabControl1
             // 
-            this.ProcessName.HeaderText = "Process Name";
-            this.ProcessName.Name = "ProcessName";
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(595, 248);
+            this.tabControl1.TabIndex = 8;
             // 
-            // Key
+            // tabPage1
             // 
-            this.Key.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Key.FillWeight = 300F;
-            this.Key.HeaderText = "Process Title";
-            this.Key.Name = "Key";
+            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(587, 222);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // Value
+            // tabPage2
             // 
-            this.Value.HeaderText = "Wasted Time";
-            this.Value.Name = "Value";
+            this.tabPage2.Controls.Add(this.CategorysGrid);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(587, 222);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
@@ -160,9 +199,8 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(619, 317);
-            this.Controls.Add(this.CategorysGrid);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.FinishTrackButton);
             this.Controls.Add(this.BeginTrackButton);
             this.Controls.Add(this.HideInTrayButton);
@@ -172,6 +210,9 @@
             this.Text = "TimeSpy";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CategorysGrid)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -190,6 +231,9 @@
         private System.Windows.Forms.DataGridView CategorysGrid;
         private System.Windows.Forms.DataGridViewTextBoxColumn Group;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 
