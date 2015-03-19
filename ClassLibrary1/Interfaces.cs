@@ -6,13 +6,15 @@ using System.Diagnostics;
 using System.Threading;
 namespace ClassLibrary1
 {
-    public interface IProcessInfo
+    public interface IProcessInfo:  IDisposable
     {
         string Name { get; set; }
         DateTime[] GetDateTimeCollection();
         bool ContainsKey(DateTime key);
         bool ContainsValue(TimeSpan value);
         TimeSpan[] GetTimeSpanCollection();
+        Dictionary<DateTime, TimeSpan> GetCollection();
+        TimeSpan ProcessDuration { get; }
         void SetRecord(string name, TimeSpan duration, DateTime processStartTime);
         void Sum(IProcessInfo other);
         TimeSpan this[DateTime key] { get; set; }

@@ -94,5 +94,34 @@ namespace ClassLibrary1
         {
             return lst.ContainsValue(value);
         }
+
+        
+        public Dictionary<DateTime, TimeSpan> GetCollection()
+        {
+            Dictionary<DateTime, TimeSpan> result = new Dictionary<DateTime, TimeSpan>();
+            foreach (var item in lst)
+                result.Add(item.Key, item.Value);
+
+                return result;
+
+            
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+        TimeSpan GetProcessDuration(){
+            var result= new TimeSpan();
+            foreach(var item in lst)
+                result+=item.Value;
+            return result;
+        }
+
+
+        public TimeSpan ProcessDuration
+        {
+        get { return GetProcessDuration();}
+        }
     }
 }

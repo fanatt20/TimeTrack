@@ -18,13 +18,21 @@ namespace ClassLibrary1
         internal static extern int GetWindowThreadProcessId([In]IntPtr hwnd, [Out]out int lProcessId);
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
-
+        int prevProcessID;
         public int GetCurrentProcessId()
         {
             int lProcessId;
             IntPtr handle = GetForegroundWindow();
             GetWindowThreadProcessId(handle, out lProcessId);
             return lProcessId;
+        }
+        private int CurrentProcessID()
+        {
+            int lProcessId;
+            GetWindowThreadProcessId((IntPtr)GetForegroundWindow(), out lProcessId);
+            prevProcessID = lProcessId;
+            return lProcessId;
+
         }
         public string GetCurrentProcessName()
         {
@@ -58,11 +66,15 @@ namespace ClassLibrary1
         public bool GetStartTimeOfCurrentProcess(out DateTime dateTime)
         {
             bool result = true;
-            dateTime = new DateTime();
+            dateTime = DateTime.Now;
             try
             {
                 //need test stability of this method
-                dateTime = Process.GetProcessById(GetCurrentProcessId()).StartTime;
+               // if (prevProcessID == GetCurrentProcessId())
+                
+                    dateTime = Process.GetProcessById(GetCurrentProcessId()).StartTime;
+                                    
+               // CurrentProcessID();
             }
             catch
             {

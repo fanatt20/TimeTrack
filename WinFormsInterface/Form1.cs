@@ -103,15 +103,23 @@ namespace WinFormsInterface
         private void button1_Click_1(object sender, EventArgs e)
         {
             treeView1.Nodes.Clear();
-            List<TreeNode> listTreeNode1 = new List<TreeNode>();
+            List<TreeNode> records = new List<TreeNode>();
+            List<TreeNode> durations = new List<TreeNode>();
 
             foreach (var category in data.GetCollection())
             {
+                records.Add(new TreeNode(category.CategoryDuration.ToString()));
                 foreach (var record in category)
-                    listTreeNode1.Add(new TreeNode(record.ToString()));
-
-                treeView1.Nodes.Add(new TreeNode(category.CategoryName, listTreeNode1.ToArray()));
-                listTreeNode1.Clear();
+                {
+                    durations.Clear();
+                    durations.Add(new TreeNode("Process duration: " + record.ProcessDuration.ToString()));
+                    foreach (var duration in record.GetCollection())
+                        durations.Add(new TreeNode("start in: " + duration.Key + "\t with duration: " + duration.Value));
+                    records.Add(new TreeNode("Process Name:" + record.Name, durations.ToArray()));
+                }
+                
+                treeView1.Nodes.Add(new TreeNode(category.CategoryName, records.ToArray()));
+                records.Clear();
             }
 
         }

@@ -42,12 +42,10 @@ namespace ClassLibrary1
             if (coll.ContainsKey(nameProcess))
             {
 
-
                 if (coll[nameProcess].ContainsKey(currentWindowTitle))
                     (coll[nameProcess] as IProcessInfoCategory)[currentWindowTitle].Sum(new ProcessInfo(currentWindowTitle, new TimeSpan(0, 0, interval), dt));
                 else
                     (coll[nameProcess] as IProcessInfoCategory).AddToCollection(currentWindowTitle, new ProcessInfo(currentWindowTitle, new TimeSpan(0, 0, interval), dt));
-
 
             }
             else
