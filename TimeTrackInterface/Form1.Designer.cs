@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.CurrentProcessButton = new System.Windows.Forms.Button();
             this.HideInTrayButton = new System.Windows.Forms.Button();
             this.BeginTrackButton = new System.Windows.Forms.Button();
             this.FinishTrackButton = new System.Windows.Forms.Button();
@@ -43,21 +42,10 @@
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // CurrentProcessButton
-            // 
-            this.CurrentProcessButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.CurrentProcessButton.Location = new System.Drawing.Point(12, 266);
-            this.CurrentProcessButton.Name = "CurrentProcessButton";
-            this.CurrentProcessButton.Size = new System.Drawing.Size(113, 39);
-            this.CurrentProcessButton.TabIndex = 0;
-            this.CurrentProcessButton.Text = "Chart";
-            this.CurrentProcessButton.UseVisualStyleBackColor = true;
-            this.CurrentProcessButton.Click += new System.EventHandler(this.button1_Click);
-            // 
             // HideInTrayButton
             // 
             this.HideInTrayButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.HideInTrayButton.Location = new System.Drawing.Point(375, 266);
+            this.HideInTrayButton.Location = new System.Drawing.Point(256, 266);
             this.HideInTrayButton.Name = "HideInTrayButton";
             this.HideInTrayButton.Size = new System.Drawing.Size(113, 39);
             this.HideInTrayButton.TabIndex = 1;
@@ -68,7 +56,7 @@
             // BeginTrackButton
             // 
             this.BeginTrackButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BeginTrackButton.Location = new System.Drawing.Point(137, 266);
+            this.BeginTrackButton.Location = new System.Drawing.Point(12, 266);
             this.BeginTrackButton.Name = "BeginTrackButton";
             this.BeginTrackButton.Size = new System.Drawing.Size(113, 39);
             this.BeginTrackButton.TabIndex = 3;
@@ -79,7 +67,7 @@
             // FinishTrackButton
             // 
             this.FinishTrackButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.FinishTrackButton.Location = new System.Drawing.Point(256, 266);
+            this.FinishTrackButton.Location = new System.Drawing.Point(137, 266);
             this.FinishTrackButton.Name = "FinishTrackButton";
             this.FinishTrackButton.Size = new System.Drawing.Size(113, 39);
             this.FinishTrackButton.TabIndex = 4;
@@ -90,7 +78,7 @@
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Location = new System.Drawing.Point(494, 266);
+            this.button1.Location = new System.Drawing.Point(375, 266);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(113, 39);
             this.button1.TabIndex = 6;
@@ -104,7 +92,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(587, 222);
+            this.tabPage3.Size = new System.Drawing.Size(468, 222);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -125,7 +113,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(587, 222);
+            this.tabPage1.Size = new System.Drawing.Size(468, 222);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -134,7 +122,7 @@
             // 
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(587, 222);
+            this.treeView1.Size = new System.Drawing.Size(468, 222);
             this.treeView1.TabIndex = 0;
             // 
             // tabControl1
@@ -144,7 +132,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(595, 248);
+            this.tabControl1.Size = new System.Drawing.Size(476, 248);
             this.tabControl1.TabIndex = 8;
             // 
             // MainWindow
@@ -153,13 +141,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(619, 317);
+            this.ClientSize = new System.Drawing.Size(500, 317);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.FinishTrackButton);
             this.Controls.Add(this.BeginTrackButton);
             this.Controls.Add(this.HideInTrayButton);
-            this.Controls.Add(this.CurrentProcessButton);
             this.MinimumSize = new System.Drawing.Size(506, 326);
             this.Name = "MainWindow";
             this.Text = "TimeSpy";
@@ -172,7 +159,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button CurrentProcessButton;
         private System.Windows.Forms.Button HideInTrayButton;
         private System.Windows.Forms.Button BeginTrackButton;
         private System.Windows.Forms.Button FinishTrackButton;

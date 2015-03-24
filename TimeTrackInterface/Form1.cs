@@ -18,7 +18,6 @@ namespace WinFormsInterface
     {
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
-        Charts filters;
         
         ProcessSessionRepository repo = new ProcessSessionRepository();
         ProcessSessionGenerator generator = new ProcessSessionGenerator();
@@ -34,10 +33,7 @@ namespace WinFormsInterface
         private void button1_Click(object sender, EventArgs e)
         {
             throw new NotImplementedException();
-            this.Visible = false;
-            filters = new Charts(repo);
-            filters.Show();
-            filters.FormClosed += new FormClosedEventHandler(ClosedSubForm);
+
 
         }
         private void ClosedSubForm(object sender, EventArgs e)
