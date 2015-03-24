@@ -23,6 +23,7 @@ namespace TimeTrackLibrary.Classes
         public IProcessSession CurrentProcess { get; private set; }
         public IProcessSession RegistredProcess { get; private set; }
         IProcessSessionProvider _provider;
+
         public void BeginGeneration(TimeSpan interval, IProcessSessionProvider provider)
         {
             _provider = provider;
@@ -31,6 +32,7 @@ namespace TimeTrackLibrary.Classes
             RegistredProcess.StartAt = DateTime.Now;
             timer = new Timer(new TimerCallback(TrackCurrentProcesses), null, new TimeSpan(0, 0, 0), interval);
         }
+
         private void TrackCurrentProcesses(object state)
         {
             CurrentProcess = _provider.GetCurrentProcessSession();

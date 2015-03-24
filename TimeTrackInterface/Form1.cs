@@ -18,29 +18,25 @@ namespace WinFormsInterface
     {
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
-        
+        private TimeSpan interval = new TimeSpan(0, 0, 1);
+        private System.Threading.Timer timer;
+
         ProcessSessionRepository repo = new ProcessSessionRepository();
         ProcessSessionGenerator generator = new ProcessSessionGenerator();
         ProcessSessionWatcher watcher = new ProcessSessionWatcher();
         ProcessSessionProvider provider = new ProcessSessionProvider();
 
+        BackgroundWorker backgroundWorker;
+
 
         public MainWindow()
         {
             InitializeComponent();
+            tabControl1.TabPages[0].Text = "Tree view";
+            tabControl1.TabPages[1].Text = "Export menu";
+            tabControl1.TabPages[2].Text = "Sheet view";
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-
-
-        }
-        private void ClosedSubForm(object sender, EventArgs e)
-        {
-            this.Show();
-            sender = null;
-        }
         private void OnExit(object sender, EventArgs e)
         {
             Application.Exit();
@@ -75,38 +71,42 @@ namespace WinFormsInterface
             this.Visible = false;
         }
 
-
         private void BeginTrackButton_Click(object sender, EventArgs e)
         {
             watcher.StartWatch(repo, generator);
-            generator.BeginGeneration(new TimeSpan(0, 0, 1), provider);
+            generator.BeginGeneration(interval, provider);
+            timer = new System.Threading.Timer(Generator_ProcessChanged, null, new TimeSpan(), interval);
             
+        }
+
+        void Generator_ProcessChanged(Object state)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                treeView1.Nodes.Clear();
+                dataGridView1.Rows.Clear();
+                foreach (var session in repo.Get())
+                {
+                    treeView1.Nodes.Add(new TreeNode(session.ToString()));
+                    dataGridView1.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);
+                }
+            });
         }
 
         private void FinishTrackButton_Click(object sender, EventArgs e)
         {
             watcher.StopWatch();
+            timer.Dispose();
         }
-        private void ThreadProcSafe()
-        {
-
-        }
-
         private void button1_Click_1(object sender, EventArgs e)
         {
             treeView1.Nodes.Clear();
-            List<TreeNode> records = new List<TreeNode>();
-            List<TreeNode> durations = new List<TreeNode>();
-
+            dataGridView1.Rows.Clear();
             foreach (var session in repo.Get())
             {
                 treeView1.Nodes.Add(new TreeNode(session.ToString()));
+                dataGridView1.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);
             }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
 
         private void ExportButton_Click(object sender, EventArgs e)

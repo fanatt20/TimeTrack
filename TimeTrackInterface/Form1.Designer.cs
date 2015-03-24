@@ -37,9 +37,17 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WindowTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StartAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // HideInTrayButton
@@ -99,7 +107,7 @@
             // 
             // ExportButton
             // 
-            this.ExportButton.Location = new System.Drawing.Point(6, 6);
+            this.ExportButton.Location = new System.Drawing.Point(3, 6);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(113, 39);
             this.ExportButton.TabIndex = 0;
@@ -129,11 +137,62 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(476, 248);
             this.tabControl1.TabIndex = 8;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.dataGridView1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(468, 222);
+            this.tabPage2.TabIndex = 3;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ProcessName,
+            this.WindowTitle,
+            this.StartAt,
+            this.Duration});
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(467, 221);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // ProcessName
+            // 
+            this.ProcessName.HeaderText = "Process Name";
+            this.ProcessName.Name = "ProcessName";
+            this.ProcessName.ReadOnly = true;
+            // 
+            // WindowTitle
+            // 
+            this.WindowTitle.HeaderText = "Window Title";
+            this.WindowTitle.Name = "WindowTitle";
+            this.WindowTitle.ReadOnly = true;
+            // 
+            // StartAt
+            // 
+            this.StartAt.HeaderText = "Start At";
+            this.StartAt.Name = "StartAt";
+            this.StartAt.ReadOnly = true;
+            // 
+            // Duration
+            // 
+            this.Duration.HeaderText = "Duration";
+            this.Duration.Name = "Duration";
+            this.Duration.ReadOnly = true;
             // 
             // MainWindow
             // 
@@ -153,6 +212,8 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -168,6 +229,12 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProcessName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WindowTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn StartAt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Duration;
     }
 }
 
