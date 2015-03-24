@@ -35,7 +35,7 @@ namespace WinFormsInterface
             InitializeComponent();
             tabControl1.TabPages[0].Text = "Sheet view";
             tabControl1.TabPages[1].Text = "Export menu";
-            
+
         }
 
         private void OnExit(object sender, EventArgs e)
@@ -97,8 +97,8 @@ namespace WinFormsInterface
         {
             watcher.StopWatch();
             generator.ProcessChanged -= Generator_ProcessChanged;
-            if (timer!=null)
-            timer.Dispose();
+            if (timer != null)
+                timer.Dispose();
         }
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -112,24 +112,28 @@ namespace WinFormsInterface
         private void ExportButton_Click(object sender, EventArgs e)
         {
             var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text File|.txt";
-            saveFileDialog.Title = "Save an Text File";
+            saveFileDialog.Filter = "Text File|.txt| Excel File|.xls";
+            saveFileDialog.Title = "Save File";
             saveFileDialog.ShowDialog();
 
             if (saveFileDialog.FileName != "")
             {
-                System.IO.StreamWriter fs = new System.IO.StreamWriter(
-                   (System.IO.FileStream)saveFileDialog.OpenFile());
-                foreach (var record in repo.Get())
-                    fs.Write(record.ToString() + "\n");
-                fs.Close();
+                switch (saveFileDialog.FilterIndex)
+                {
+                    case 1:
+                        ProcessSessionExporter.ExportAsTXT(repo, saveFileDialog.FileName);
+                        break;
+                    case 2:
+                        ProcessSessionExporter.ExportAsExcel(repo, saveFileDialog.FileName);
+                        break;
+                }
             }
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (timer!=null)
-            timer.Dispose();
+            if (timer != null)
+                timer.Dispose();
         }
 
     }
