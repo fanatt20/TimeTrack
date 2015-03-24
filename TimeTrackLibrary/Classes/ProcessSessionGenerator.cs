@@ -42,6 +42,7 @@ namespace TimeTrackLibrary.Classes
             else
             {
                 CurrentProcess.StartAt = DateTime.Now;
+                CurrentProcess.Duration += Interval;
                 RegistredProcess = CurrentProcess;
                 OnProcessChanged(RegistredProcess);
             }

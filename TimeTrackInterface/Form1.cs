@@ -20,6 +20,7 @@ namespace WinFormsInterface
         private ContextMenu trayMenu;
         private TimeSpan interval = new TimeSpan(0, 0, 1);
         private System.Threading.Timer timer;
+        private int _countOfrepoCollection;
 
         ProcessSessionRepository repo = new ProcessSessionRepository();
         ProcessSessionGenerator generator = new ProcessSessionGenerator();
@@ -32,9 +33,9 @@ namespace WinFormsInterface
         public MainWindow()
         {
             InitializeComponent();
-            tabControl1.TabPages[0].Text = "Tree view";
+            tabControl1.TabPages[0].Text = "Sheet view";
             tabControl1.TabPages[1].Text = "Export menu";
-            tabControl1.TabPages[2].Text = "Sheet view";
+            
         }
 
         private void OnExit(object sender, EventArgs e)
@@ -75,19 +76,18 @@ namespace WinFormsInterface
         {
             watcher.StartWatch(repo, generator);
             generator.BeginGeneration(interval, provider);
-            timer = new System.Threading.Timer(Generator_ProcessChanged, null, new TimeSpan(), interval);
-            
+            generator.ProcessChanged += Generator_ProcessChanged;
+
         }
 
         void Generator_ProcessChanged(Object state)
         {
             this.Invoke((MethodInvoker)delegate
             {
-                treeView1.Nodes.Clear();
                 dataGridView1.Rows.Clear();
+
                 foreach (var session in repo.Get())
                 {
-                    treeView1.Nodes.Add(new TreeNode(session.ToString()));
                     dataGridView1.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);
                 }
             });
@@ -96,15 +96,15 @@ namespace WinFormsInterface
         private void FinishTrackButton_Click(object sender, EventArgs e)
         {
             watcher.StopWatch();
+            generator.ProcessChanged -= Generator_ProcessChanged;
+            if (timer!=null)
             timer.Dispose();
         }
         private void button1_Click_1(object sender, EventArgs e)
         {
-            treeView1.Nodes.Clear();
             dataGridView1.Rows.Clear();
             foreach (var session in repo.Get())
             {
-                treeView1.Nodes.Add(new TreeNode(session.ToString()));
                 dataGridView1.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);
             }
         }
@@ -124,6 +124,12 @@ namespace WinFormsInterface
                     fs.Write(record.ToString() + "\n");
                 fs.Close();
             }
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (timer!=null)
+            timer.Dispose();
         }
 
     }
