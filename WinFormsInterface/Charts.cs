@@ -8,18 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
-using ClassLibrary1;
 using System.IO;
 using System.Windows.Forms.DataVisualization.Charting;
+using TimeTrackLibrary.Interfaces;
 namespace WinFormsInterface
 {
-    public partial class Filters : Form
+    public partial class Charts : Form
     {
-        ProcessInfoStorage pis;
-        public Filters( ProcessInfoStorage piss)
+        IProcessSessionRepository _repo;
+        public Charts( IProcessSessionRepository repo)
         {
             InitializeComponent();
-            pis = piss;           
+            _repo = repo;
         }
 
         private void Cancel_Click(object sender, EventArgs e)
@@ -56,12 +56,9 @@ namespace WinFormsInterface
                 chart1.Series[0].Points.Clear();
                 
                 //FiltersGrid.Rows.Clear();
-                foreach (var item in pis)
+                foreach (var item in _repo.Get())
                 {
-                   // FiltersGrid.Rows.Add(item.CategoryName, item.CategoryDuration);
-
-                    Series series = this.chart1.Series.Add(item.CategoryName);
-                    series.Points.Add(item.CategoryDuration.TotalSeconds);
+                
                 }
 
             }

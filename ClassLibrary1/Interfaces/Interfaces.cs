@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Threading;
-namespace ClassLibrary1
+namespace TimeTrackLibrary
 {
     public interface IProcessInfo:  IDisposable
     {
@@ -44,7 +44,7 @@ namespace ClassLibrary1
         string GetCurrentProcessName();
         TimeSpan GetCurrentProcessTime();
         string GetCurrentProcessTitle();
-        bool GetStartTimeOfCurrentProcess(out DateTime dateTime);
+        bool TryGetStartTimeOfCurrentProcess(out DateTime dateTime);
     }
     public class ProcessInfoEventArgs : EventArgs
     {

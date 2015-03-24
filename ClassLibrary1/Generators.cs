@@ -6,9 +6,9 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-using ClassLibrary1;
+using TimeTrackLibrary;
 
-namespace ClassLibrary1
+namespace TimeTrackLibrary
 {
     public class ProcessInfoGenerator : IProcessInfoGenerator
     {
@@ -63,7 +63,7 @@ namespace ClassLibrary1
 
             //return Process.GetProcessById(GetCurrentProcessId()).MainWindowTitle;
         }
-        public bool GetStartTimeOfCurrentProcess(out DateTime dateTime)
+        public bool TryGetStartTimeOfCurrentProcess(out DateTime dateTime)
         {
             bool result = true;
             dateTime = DateTime.Now;

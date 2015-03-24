@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ClassLibrary1
+namespace TimeTrackLibrary
 {
     public class ProcessInfo : IProcessInfo
     {
         #region Properties
         public string Name { get; set; }
         SortedList<DateTime, TimeSpan> lst;
-        
+
         #endregion
 
         #region Constructors
@@ -20,7 +20,7 @@ namespace ClassLibrary1
             lst = new SortedList<DateTime, TimeSpan>();
             lst.Add(DateTime.Now, new TimeSpan());
         }
-        public ProcessInfo(string name, TimeSpan duration,DateTime startTime)
+        public ProcessInfo(string name, TimeSpan duration, DateTime startTime)
         {
             Name = name;
             lst = new SortedList<DateTime, TimeSpan>();
@@ -30,9 +30,9 @@ namespace ClassLibrary1
         public void Sum(ProcessInfo right)
         {
             TimeSpan buff;
-            if(Name.Equals(right.Name))
+            if (Name.Equals(right.Name))
             {
-                foreach( var key in right.GetDateTimeCollection())
+                foreach (var key in right.GetDateTimeCollection())
                 {
                     if (lst.TryGetValue(key, out buff))
                         lst[key] += right[key];
@@ -41,13 +41,14 @@ namespace ClassLibrary1
                 }
             }
         }
-        public void SetRecord(string name, TimeSpan duration, DateTime processStartTime){
-        Name =name;
-        lst.Add(processStartTime, duration);
+        public void SetRecord(string name, TimeSpan duration, DateTime processStartTime)
+        {
+            Name = name;
+            lst.Add(processStartTime, duration);
         }
         public override string ToString()
         {
-            var result = "Process:"+Name;
+            var result = "Process:" + Name;
             foreach (var keyValuePair in lst)
                 result += "\t start in: " + keyValuePair.Key + "\t with duration: " + keyValuePair.Value + ".\n";
 
@@ -95,33 +96,33 @@ namespace ClassLibrary1
             return lst.ContainsValue(value);
         }
 
-        
+
         public Dictionary<DateTime, TimeSpan> GetCollection()
         {
             Dictionary<DateTime, TimeSpan> result = new Dictionary<DateTime, TimeSpan>();
             foreach (var item in lst)
                 result.Add(item.Key, item.Value);
 
-                return result;
+            return result;
 
-            
+
         }
 
         public void Dispose()
         {
             throw new NotImplementedException();
         }
-        TimeSpan GetProcessDuration(){
-            var result= new TimeSpan();
-            foreach(var item in lst)
-                result+=item.Value;
+        TimeSpan GetProcessDuration()
+        {
+            var result = new TimeSpan();
+            foreach (var item in lst)
+                result += item.Value;
             return result;
         }
 
-
         public TimeSpan ProcessDuration
         {
-        get { return GetProcessDuration();}
+            get { return GetProcessDuration(); }
         }
     }
 }

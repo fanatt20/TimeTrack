@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ClassLibrary1;
+using TimeTrackLibrary;
 
-namespace ClassLibrary1
+namespace TimeTrackLibrary
 {
     public class ProcessInfoCategory : IProcessInfoCategory
     {

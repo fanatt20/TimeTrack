@@ -9,7 +9,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
-using ClassLibrary1;
+using TimeTrackLibrary.Classes;
+using TimeTrackLibrary.Interfaces;
 
 namespace WinFormsInterface
 {
@@ -17,12 +18,13 @@ namespace WinFormsInterface
     {
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
-        Filters filters;
-        ProcessInfoStorage data = new ProcessInfoStorage();
-        ProcessInfoGenerator gen = new ProcessInfoGenerator();
-        ProcessInfoHandler handler = new ProcessInfoHandler();
-        private BackgroundWorker backgroundWorker1;
-        private Thread demoThread;
+        Charts filters;
+        
+        ProcessSessionRepository repo = new ProcessSessionRepository();
+        ProcessSessionGenerator generator = new ProcessSessionGenerator();
+        ProcessSessionWatcher watcher = new ProcessSessionWatcher();
+        ProcessSessionProvider provider = new ProcessSessionProvider();
+
 
         public MainWindow()
         {
@@ -31,13 +33,12 @@ namespace WinFormsInterface
 
         private void button1_Click(object sender, EventArgs e)
         {
+            throw new NotImplementedException();
             this.Visible = false;
-            filters = new Filters(data);
+            filters = new Charts(repo);
             filters.Show();
             filters.FormClosed += new FormClosedEventHandler(ClosedSubForm);
 
-            //this.Visible = true;
-            // Application.Run(new Filters());
         }
         private void ClosedSubForm(object sender, EventArgs e)
         {
@@ -69,7 +70,7 @@ namespace WinFormsInterface
 
 
             trayIcon = new NotifyIcon();
-            trayIcon.Text = "TimeSpy";
+            trayIcon.Text = "TimeTrack";
             trayIcon.Icon = new Icon(SystemIcons.Asterisk, 40, 40);
 
 
@@ -81,20 +82,15 @@ namespace WinFormsInterface
 
         private void BeginTrackButton_Click(object sender, EventArgs e)
         {
-            handler.StartTrack(gen, data, 1);
+            watcher.StartWatch(repo, generator);
+            generator.BeginGeneration(new TimeSpan(0, 0, 1), provider);
+            
         }
 
         private void FinishTrackButton_Click(object sender, EventArgs e)
         {
-            handler.FinishTrack();
+            watcher.StopWatch();
         }
-        private void UpdateData(object sender, ProcessInfoEventArgs e)
-        {
-        }
-
-
-        // This method is executed on the worker thread and makes 
-        // a thread-safe call on the TextBox control. 
         private void ThreadProcSafe()
         {
 
@@ -106,22 +102,10 @@ namespace WinFormsInterface
             List<TreeNode> records = new List<TreeNode>();
             List<TreeNode> durations = new List<TreeNode>();
 
-            foreach (var category in data.GetCollection())
+            foreach (var session in repo.Get())
             {
-                records.Add(new TreeNode(category.CategoryDuration.ToString()));
-                foreach (var record in category)
-                {
-                    durations.Clear();
-                    durations.Add(new TreeNode("Process duration: " + record.ProcessDuration.ToString()));
-                    foreach (var duration in record.GetCollection())
-                        durations.Add(new TreeNode("start in: " + duration.Key + "\t with duration: " + duration.Value));
-                    records.Add(new TreeNode("Process Name:" + record.Name, durations.ToArray()));
-                }
-                
-                treeView1.Nodes.Add(new TreeNode(category.CategoryName, records.ToArray()));
-                records.Clear();
+                treeView1.Nodes.Add(new TreeNode(session.ToString()));
             }
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -136,13 +120,11 @@ namespace WinFormsInterface
             saveFileDialog.Title = "Save an Text File";
             saveFileDialog.ShowDialog();
 
-            // If the file name is not an empty string open it for saving.
             if (saveFileDialog.FileName != "")
             {
-                // Saves the Image via a FileStream created by the OpenFile method.
                 System.IO.StreamWriter fs = new System.IO.StreamWriter(
                    (System.IO.FileStream)saveFileDialog.OpenFile());
-                foreach (var record in data)
+                foreach (var record in repo.Get())
                     fs.Write(record.ToString() + "\n");
                 fs.Close();
             }

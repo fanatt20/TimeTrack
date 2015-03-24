@@ -7,7 +7,7 @@
     <ProjectGuid>{B28F4057-F9A0-4EB7-8B8D-06BB04FF1C2B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClassLibrary1</RootNamespace>
+    <RootNamespace>TimeTrackLibrary</RootNamespace>
     <AssemblyName>ClassLibrary1</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -42,7 +42,12 @@
     <Compile Include="Category.cs" />
     <Compile Include="DataProcessing.cs" />
     <Compile Include="Generators.cs" />
-    <Compile Include="Interfaces.cs" />
+    <Compile Include="Interfaces\Interfaces.cs" />
+    <Compile Include="Interfaces\ProcessInfo.cs" />
+    <Compile Include="Interfaces\ProcessProvider.cs" />
+    <Compile Include="Interfaces\ProcessWatcher.cs" />
+    <Compile Include="Interfaces\Session.cs" />
+    <Compile Include="Interfaces\SessionRepository.cs" />
     <Compile Include="ProcessInfoStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Record.cs" />

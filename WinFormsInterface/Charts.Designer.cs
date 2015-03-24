@@ -1,6 +1,6 @@
 ﻿namespace WinFormsInterface
 {
-    partial class Filters
+    partial class Charts
     {
         /// <summary>
         /// Required designer variable.

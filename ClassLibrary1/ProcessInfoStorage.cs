@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ClassLibrary1
+namespace TimeTrackLibrary
 {
     public class ProcessInfoStorage:IProcessStorage<ProcessInfoCategory>
     {// TODO: Normalize data for charts

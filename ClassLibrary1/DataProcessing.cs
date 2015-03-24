@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace ClassLibrary1
+namespace TimeTrackLibrary
 {
     public class ProcessInfoHandler : IProcessInfoHandler<ProcessInfoCategory>,IDisposable
     {
@@ -28,7 +28,7 @@ namespace ClassLibrary1
         private void Track(object state)
         {
             string nameProcess = gen.GetCurrentProcessName();
-            if (nameProcess == null || nameProcess == "")
+            if (nameProcess==null || nameProcess=="")
                 nameProcess = "Nothing";
             string currentWindowTitle = gen.GetCurrentProcessTitle();
 
@@ -36,7 +36,7 @@ namespace ClassLibrary1
                 currentWindowTitle = "Desktop";
 
             DateTime dt;
-            if (!gen.GetStartTimeOfCurrentProcess(out dt))
+            if (!gen.TryGetStartTimeOfCurrentProcess(out dt))
                 dt = DateTime.Now;
 
             if (coll.ContainsKey(nameProcess))
