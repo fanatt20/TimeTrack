@@ -22,9 +22,8 @@ namespace WinFormsInterface
 
         public MainWindow()
         {
-            InitializeComponent();         
-            tabControl1.TabPages[0].Text = "Sheet view";
-            tabControl1.TabPages[1].Text = "Export menu";
+            InitializeComponent();
+
             ProcessSessionsImporter.DeserializeFromFile(repo, "Data");
             ShowStatisticButton_Click(new object(), new EventArgs());
 
@@ -104,20 +103,30 @@ namespace WinFormsInterface
         private void ExportButton_Click(object sender, EventArgs e)
         {
             var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text File|.txt| Excel File|.xls";
+            saveFileDialog.Filter = "Text File|.txt|Excel File 1999-2003|.xls|CSV|.csv";
             saveFileDialog.Title = "Save File";
             saveFileDialog.ShowDialog();
 
             if (saveFileDialog.FileName != "")
             {
-                switch (saveFileDialog.FilterIndex)
+                try
                 {
-                    case 1:
-                        ProcessSessionExporter.ExportAsText(repo, saveFileDialog.FileName);
-                        break;
-                    case 2:
-                        ProcessSessionExporter.ExportAsExcel(repo, saveFileDialog.FileName);
-                        break;
+                    switch (saveFileDialog.FilterIndex)
+                    {
+                        case 1:
+                            ProcessSessionsExporter.ExportAsText(repo, saveFileDialog.FileName);
+                            break;
+                        case 2:
+                            ProcessSessionsExporter.ExportAsExcel(repo, saveFileDialog.FileName);
+                            break;
+                        case 3:
+                            ProcessSessionsExporter.ExportAsCSV(repo, saveFileDialog.FileName);
+                            break;
+                    }
+                }
+                catch (System.IO.IOException excepction)
+                {
+                    MessageBox.Show(excepction.Message);
                 }
             }
         }
@@ -131,12 +140,12 @@ namespace WinFormsInterface
                 if (openFile.FileName != "")
                     ProcessSessionsImporter.ImportFromText(repo, openFile.FileName);
             }
-            ShowStatisticButton_Click(null,null);
+            ShowStatisticButton_Click(null, null);
         }
 
         private void SerializeButton_Click(object sender, EventArgs e)
         {
-            ProcessSessionExporter.SerializeIntoFile(repo, "Data");
+            ProcessSessionsExporter.SerializeIntoFile(repo, "Data");
 
         }
 
@@ -147,7 +156,7 @@ namespace WinFormsInterface
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ProcessSessionExporter.SerializeIntoFile(repo, "Data");
+            ProcessSessionsExporter.SerializeIntoFile(repo, "Data");
         }
 
     }

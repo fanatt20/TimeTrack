@@ -29,25 +29,25 @@
         private void InitializeComponent()
         {
             this.HideInTrayButton = new System.Windows.Forms.Button();
-            this.BeginTrackButton = new System.Windows.Forms.Button();
-            this.FinishTrackButton = new System.Windows.Forms.Button();
             this.ShowStatisticButton = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.SpreadsheetTab = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.WindowTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StartAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ExportImportTab = new System.Windows.Forms.TabPage();
+            this.ExportButton = new System.Windows.Forms.Button();
+            this.BeginTrackButton = new System.Windows.Forms.Button();
+            this.FinishTrackButton = new System.Windows.Forms.Button();
             this.ImportButton = new System.Windows.Forms.Button();
             this.DeserializeButton = new System.Windows.Forms.Button();
             this.SerrializeButton = new System.Windows.Forms.Button();
-            this.ExportButton = new System.Windows.Forms.Button();
-            this.tabPage3.SuspendLayout();
+            this.SpreadsheetTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.ExportImportTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // HideInTrayButton
@@ -61,28 +61,6 @@
             this.HideInTrayButton.UseVisualStyleBackColor = true;
             this.HideInTrayButton.Click += new System.EventHandler(this.HideInTrayButton_Click);
             // 
-            // BeginTrackButton
-            // 
-            this.BeginTrackButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BeginTrackButton.Location = new System.Drawing.Point(12, 266);
-            this.BeginTrackButton.Name = "BeginTrackButton";
-            this.BeginTrackButton.Size = new System.Drawing.Size(113, 39);
-            this.BeginTrackButton.TabIndex = 3;
-            this.BeginTrackButton.Text = "Begin Track";
-            this.BeginTrackButton.UseVisualStyleBackColor = true;
-            this.BeginTrackButton.Click += new System.EventHandler(this.BeginTrackButton_Click);
-            // 
-            // FinishTrackButton
-            // 
-            this.FinishTrackButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.FinishTrackButton.Location = new System.Drawing.Point(137, 266);
-            this.FinishTrackButton.Name = "FinishTrackButton";
-            this.FinishTrackButton.Size = new System.Drawing.Size(113, 39);
-            this.FinishTrackButton.TabIndex = 4;
-            this.FinishTrackButton.Text = "Finish Track";
-            this.FinishTrackButton.UseVisualStyleBackColor = true;
-            this.FinishTrackButton.Click += new System.EventHandler(this.FinishTrackButton_Click);
-            // 
             // ShowStatisticButton
             // 
             this.ShowStatisticButton.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -94,16 +72,17 @@
             this.ShowStatisticButton.UseVisualStyleBackColor = true;
             this.ShowStatisticButton.Click += new System.EventHandler(this.ShowStatisticButton_Click);
             // 
-            // tabPage3
+            // SpreadsheetTab
             // 
-            this.tabPage3.Controls.Add(this.dataGridView1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(468, 222);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.SpreadsheetTab.Controls.Add(this.dataGridView1);
+            this.SpreadsheetTab.Cursor = System.Windows.Forms.Cursors.Default;
+            this.SpreadsheetTab.Location = new System.Drawing.Point(4, 22);
+            this.SpreadsheetTab.Name = "SpreadsheetTab";
+            this.SpreadsheetTab.Padding = new System.Windows.Forms.Padding(3);
+            this.SpreadsheetTab.Size = new System.Drawing.Size(468, 222);
+            this.SpreadsheetTab.TabIndex = 2;
+            this.SpreadsheetTab.Text = "Spreadsheet";
+            this.SpreadsheetTab.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
@@ -149,27 +128,59 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.SpreadsheetTab);
+            this.tabControl1.Controls.Add(this.ExportImportTab);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(476, 248);
             this.tabControl1.TabIndex = 8;
             // 
-            // tabPage2
+            // ExportImportTab
             // 
-            this.tabPage2.Controls.Add(this.ImportButton);
-            this.tabPage2.Controls.Add(this.DeserializeButton);
-            this.tabPage2.Controls.Add(this.SerrializeButton);
-            this.tabPage2.Controls.Add(this.ExportButton);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(468, 222);
-            this.tabPage2.TabIndex = 3;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.ExportImportTab.Controls.Add(this.ImportButton);
+            this.ExportImportTab.Controls.Add(this.DeserializeButton);
+            this.ExportImportTab.Controls.Add(this.SerrializeButton);
+            this.ExportImportTab.Controls.Add(this.ExportButton);
+            this.ExportImportTab.Location = new System.Drawing.Point(4, 22);
+            this.ExportImportTab.Name = "ExportImportTab";
+            this.ExportImportTab.Padding = new System.Windows.Forms.Padding(3);
+            this.ExportImportTab.Size = new System.Drawing.Size(468, 222);
+            this.ExportImportTab.TabIndex = 3;
+            this.ExportImportTab.Text = "Export/Import Menu";
+            this.ExportImportTab.UseVisualStyleBackColor = true;
+            // 
+            // ExportButton
+            // 
+            this.ExportButton.Location = new System.Drawing.Point(3, 7);
+            this.ExportButton.Name = "ExportButton";
+            this.ExportButton.Size = new System.Drawing.Size(113, 39);
+            this.ExportButton.TabIndex = 1;
+            this.ExportButton.Text = "Export";
+            this.ExportButton.UseVisualStyleBackColor = true;
+            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
+            // 
+            // BeginTrackButton
+            // 
+            this.BeginTrackButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BeginTrackButton.Location = new System.Drawing.Point(12, 266);
+            this.BeginTrackButton.Name = "BeginTrackButton";
+            this.BeginTrackButton.Size = new System.Drawing.Size(113, 39);
+            this.BeginTrackButton.TabIndex = 3;
+            this.BeginTrackButton.Text = "Begin Track";
+            this.BeginTrackButton.UseVisualStyleBackColor = true;
+            this.BeginTrackButton.Click += new System.EventHandler(this.BeginTrackButton_Click);
+            // 
+            // FinishTrackButton
+            // 
+            this.FinishTrackButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.FinishTrackButton.Location = new System.Drawing.Point(137, 266);
+            this.FinishTrackButton.Name = "FinishTrackButton";
+            this.FinishTrackButton.Size = new System.Drawing.Size(113, 39);
+            this.FinishTrackButton.TabIndex = 4;
+            this.FinishTrackButton.Text = "Finish Track";
+            this.FinishTrackButton.UseVisualStyleBackColor = true;
+            this.FinishTrackButton.Click += new System.EventHandler(this.FinishTrackButton_Click);
             // 
             // ImportButton
             // 
@@ -201,16 +212,6 @@
             this.SerrializeButton.UseVisualStyleBackColor = true;
             this.SerrializeButton.Click += new System.EventHandler(this.SerializeButton_Click);
             // 
-            // ExportButton
-            // 
-            this.ExportButton.Location = new System.Drawing.Point(3, 7);
-            this.ExportButton.Name = "ExportButton";
-            this.ExportButton.Size = new System.Drawing.Size(113, 39);
-            this.ExportButton.TabIndex = 1;
-            this.ExportButton.Text = "Export";
-            this.ExportButton.UseVisualStyleBackColor = true;
-            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,10 +228,10 @@
             this.Name = "MainWindow";
             this.Text = "TimeSpy";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
-            this.tabPage3.ResumeLayout(false);
+            this.SpreadsheetTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabControl1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
+            this.ExportImportTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -238,21 +239,21 @@
         #endregion
 
         private System.Windows.Forms.Button HideInTrayButton;
-        private System.Windows.Forms.Button BeginTrackButton;
-        private System.Windows.Forms.Button FinishTrackButton;
         private System.Windows.Forms.Button ShowStatisticButton;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage SpreadsheetTab;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage ExportImportTab;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProcessName;
         private System.Windows.Forms.DataGridViewTextBoxColumn WindowTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn StartAt;
         private System.Windows.Forms.DataGridViewTextBoxColumn Duration;
         private System.Windows.Forms.Button ExportButton;
-        private System.Windows.Forms.Button SerrializeButton;
-        private System.Windows.Forms.Button DeserializeButton;
         private System.Windows.Forms.Button ImportButton;
+        private System.Windows.Forms.Button DeserializeButton;
+        private System.Windows.Forms.Button SerrializeButton;
+        private System.Windows.Forms.Button BeginTrackButton;
+        private System.Windows.Forms.Button FinishTrackButton;
     }
 }
 
