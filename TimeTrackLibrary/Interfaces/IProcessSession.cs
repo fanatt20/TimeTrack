@@ -11,6 +11,6 @@ namespace TimeTrackLibrary.Interfaces
         string WindowTitle { get; set; }
         DateTime StartAt { get; set; }
         TimeSpan Duration { get; set; }
-        bool IsSameProcessAs(IProcessSession other);
+        bool HaveSameProcessNameAndWindowTitle(IProcessSession other);
     }
 }

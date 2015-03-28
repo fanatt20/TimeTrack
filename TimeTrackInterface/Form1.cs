@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Threading;
 using TimeTrackLibrary.Classes;
-using TimeTrackLibrary.Interfaces;
 
 namespace WinFormsInterface
 {
@@ -19,22 +10,23 @@ namespace WinFormsInterface
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
         private TimeSpan interval = new TimeSpan(0, 0, 1);
-        private System.Threading.Timer timer;
-        private int _countOfrepoCollection;
+
 
         ProcessSessionRepository repo = new ProcessSessionRepository();
         ProcessSessionGenerator generator = new ProcessSessionGenerator();
         ProcessSessionWatcher watcher = new ProcessSessionWatcher();
         ProcessSessionProvider provider = new ProcessSessionProvider();
 
-        BackgroundWorker backgroundWorker;
+
 
 
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();         
             tabControl1.TabPages[0].Text = "Sheet view";
             tabControl1.TabPages[1].Text = "Export menu";
+            ProcessSessionsImporter.DeserializeFromFile(repo, "Data");
+            ShowStatisticButton_Click(new object(), new EventArgs());
 
         }
 
@@ -97,11 +89,11 @@ namespace WinFormsInterface
         {
             watcher.StopWatch();
             generator.ProcessChanged -= Generator_ProcessChanged;
-            if (timer != null)
-                timer.Dispose();
+
         }
-        private void button1_Click_1(object sender, EventArgs e)
+        private void ShowStatisticButton_Click(object sender, EventArgs e)
         {
+
             dataGridView1.Rows.Clear();
             foreach (var session in repo.Get())
             {
@@ -121,7 +113,7 @@ namespace WinFormsInterface
                 switch (saveFileDialog.FilterIndex)
                 {
                     case 1:
-                        ProcessSessionExporter.ExportAsTXT(repo, saveFileDialog.FileName);
+                        ProcessSessionExporter.ExportAsText(repo, saveFileDialog.FileName);
                         break;
                     case 2:
                         ProcessSessionExporter.ExportAsExcel(repo, saveFileDialog.FileName);
@@ -130,10 +122,32 @@ namespace WinFormsInterface
             }
         }
 
+        private void ImportButton_Click(object sender, EventArgs e)
+        {
+            using (var openFile = new OpenFileDialog())
+            {
+                openFile.Title = "Text File";
+                openFile.ShowDialog();
+                if (openFile.FileName != "")
+                    ProcessSessionsImporter.ImportFromText(repo, openFile.FileName);
+            }
+            ShowStatisticButton_Click(null,null);
+        }
+
+        private void SerializeButton_Click(object sender, EventArgs e)
+        {
+            ProcessSessionExporter.SerializeIntoFile(repo, "Data");
+
+        }
+
+        private void DeserializeButton_Click(object sender, EventArgs e)
+        {
+            ProcessSessionsImporter.DeserializeFromFile(repo, "Data");
+        }
+
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (timer != null)
-                timer.Dispose();
+            ProcessSessionExporter.SerializeIntoFile(repo, "Data");
         }
 
     }

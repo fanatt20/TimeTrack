@@ -31,7 +31,7 @@
             this.HideInTrayButton = new System.Windows.Forms.Button();
             this.BeginTrackButton = new System.Windows.Forms.Button();
             this.FinishTrackButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.ShowStatisticButton = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ProcessName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,6 +40,9 @@
             this.Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ImportButton = new System.Windows.Forms.Button();
+            this.DeserializeButton = new System.Windows.Forms.Button();
+            this.SerrializeButton = new System.Windows.Forms.Button();
             this.ExportButton = new System.Windows.Forms.Button();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -80,16 +83,16 @@
             this.FinishTrackButton.UseVisualStyleBackColor = true;
             this.FinishTrackButton.Click += new System.EventHandler(this.FinishTrackButton_Click);
             // 
-            // button1
+            // ShowStatisticButton
             // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Location = new System.Drawing.Point(375, 266);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(113, 39);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Show Statistic";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.ShowStatisticButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ShowStatisticButton.Location = new System.Drawing.Point(375, 266);
+            this.ShowStatisticButton.Name = "ShowStatisticButton";
+            this.ShowStatisticButton.Size = new System.Drawing.Size(113, 39);
+            this.ShowStatisticButton.TabIndex = 6;
+            this.ShowStatisticButton.Text = "Show Statistic";
+            this.ShowStatisticButton.UseVisualStyleBackColor = true;
+            this.ShowStatisticButton.Click += new System.EventHandler(this.ShowStatisticButton_Click);
             // 
             // tabPage3
             // 
@@ -156,6 +159,9 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.ImportButton);
+            this.tabPage2.Controls.Add(this.DeserializeButton);
+            this.tabPage2.Controls.Add(this.SerrializeButton);
             this.tabPage2.Controls.Add(this.ExportButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -165,9 +171,39 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // ImportButton
+            // 
+            this.ImportButton.Location = new System.Drawing.Point(3, 52);
+            this.ImportButton.Name = "ImportButton";
+            this.ImportButton.Size = new System.Drawing.Size(112, 38);
+            this.ImportButton.TabIndex = 4;
+            this.ImportButton.Text = "Import";
+            this.ImportButton.UseVisualStyleBackColor = true;
+            this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
+            // 
+            // DeserializeButton
+            // 
+            this.DeserializeButton.Location = new System.Drawing.Point(349, 51);
+            this.DeserializeButton.Name = "DeserializeButton";
+            this.DeserializeButton.Size = new System.Drawing.Size(113, 39);
+            this.DeserializeButton.TabIndex = 3;
+            this.DeserializeButton.Text = "Deserialize";
+            this.DeserializeButton.UseVisualStyleBackColor = true;
+            this.DeserializeButton.Click += new System.EventHandler(this.DeserializeButton_Click);
+            // 
+            // SerrializeButton
+            // 
+            this.SerrializeButton.Location = new System.Drawing.Point(349, 6);
+            this.SerrializeButton.Name = "SerrializeButton";
+            this.SerrializeButton.Size = new System.Drawing.Size(113, 39);
+            this.SerrializeButton.TabIndex = 2;
+            this.SerrializeButton.Text = "Serrialize";
+            this.SerrializeButton.UseVisualStyleBackColor = true;
+            this.SerrializeButton.Click += new System.EventHandler(this.SerializeButton_Click);
+            // 
             // ExportButton
             // 
-            this.ExportButton.Location = new System.Drawing.Point(6, 6);
+            this.ExportButton.Location = new System.Drawing.Point(3, 7);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(113, 39);
             this.ExportButton.TabIndex = 1;
@@ -183,7 +219,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(500, 317);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.ShowStatisticButton);
             this.Controls.Add(this.FinishTrackButton);
             this.Controls.Add(this.BeginTrackButton);
             this.Controls.Add(this.HideInTrayButton);
@@ -204,7 +240,7 @@
         private System.Windows.Forms.Button HideInTrayButton;
         private System.Windows.Forms.Button BeginTrackButton;
         private System.Windows.Forms.Button FinishTrackButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button ShowStatisticButton;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -214,6 +250,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn StartAt;
         private System.Windows.Forms.DataGridViewTextBoxColumn Duration;
         private System.Windows.Forms.Button ExportButton;
+        private System.Windows.Forms.Button SerrializeButton;
+        private System.Windows.Forms.Button DeserializeButton;
+        private System.Windows.Forms.Button ImportButton;
     }
 }
 

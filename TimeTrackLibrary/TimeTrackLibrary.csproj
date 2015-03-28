@@ -43,6 +43,7 @@
     <Compile Include="Classes\ProcessSessionExporter.cs" />
     <Compile Include="Classes\ProcessSessionGenerator.cs" />
     <Compile Include="Classes\ProcessSessionProvider.cs" />
+    <Compile Include="Classes\ProcessSessionsImporter.cs" />
     <Compile Include="Classes\ProcessSessionWatcher.cs" />
     <Compile Include="Classes\ProcessSessionRepository.cs" />
     <Compile Include="Interfaces\IProcessSessionProvider.cs" />

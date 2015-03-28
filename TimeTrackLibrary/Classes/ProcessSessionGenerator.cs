@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace TimeTrackLibrary.Classes
 {
-    public class ProcessSessionGenerator : IProcessSessionGenerator
+    public sealed class ProcessSessionGenerator : IProcessSessionGenerator, IDisposable
     {
 
         public event Action<IProcessSession> ProcessChanged;
@@ -18,7 +18,7 @@ namespace TimeTrackLibrary.Classes
 
         }
         Timer timer;
-        
+
         public TimeSpan Interval { get; private set; }
         public IProcessSession CurrentProcess { get; private set; }
         public IProcessSession RegistredProcess { get; private set; }
@@ -37,7 +37,7 @@ namespace TimeTrackLibrary.Classes
         {
             CurrentProcess = _provider.GetCurrentProcessSession();
 
-            if (RegistredProcess.IsSameProcessAs(CurrentProcess))
+            if (RegistredProcess.HaveSameProcessNameAndWindowTitle(CurrentProcess))
                 RegistredProcess.Duration += Interval;
             else
             {
@@ -46,13 +46,21 @@ namespace TimeTrackLibrary.Classes
                 RegistredProcess = CurrentProcess;
                 OnProcessChanged(RegistredProcess);
             }
-                
+
         }
 
 
         public void CancelGeneration()
         {
-            timer.Dispose();
+            if (timer != null)
+                timer.Dispose();
+        }
+
+
+        public void Dispose()
+        {
+            if (timer != null)
+                timer.Dispose();
         }
     }
 }

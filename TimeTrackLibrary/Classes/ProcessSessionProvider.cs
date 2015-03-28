@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace TimeTrackLibrary.Classes
 {
-    public class ProcessSessionProvider: IProcessSessionProvider
+    public sealed class ProcessSessionProvider: IProcessSessionProvider
     {
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
