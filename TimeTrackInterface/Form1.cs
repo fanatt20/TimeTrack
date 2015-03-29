@@ -150,10 +150,25 @@ namespace WinFormsInterface
             SessionsSpreadsheetWithFilters.Rows.Clear();
             var processFilter = checkedListBox1.CheckedItems;
 
-            var sessions = from session in repo.Get()
-                           where processFilter.Contains(session.ProcessName) &&
-                                 (dateTimePicker1.Value < session.StartAt && dateTimePicker2.Value >= session.StartAt)
+            var sessions = repo.Get();
+
+            if (processFilter.Count != 0)
+                sessions = from session in sessions
+                           where processFilter.Contains(session.ProcessName)
                            select session;
+
+            if (dateTimePicker1.Value.Date != DateTime.Now.Date && dateTimePicker2.Value.Date != DateTime.Now.Date)
+                sessions = from session in sessions
+                           where
+                              session.StartAt.Date >= dateTimePicker1.Value.Date
+                           && session.StartAt.Date <= dateTimePicker2.Value.Date
+                           select session;
+
+            if (!String.IsNullOrEmpty(textBox1.Text))
+                sessions = from session in sessions
+                           where session.WindowTitle.Contains(textBox1.Text)
+                           select session;
+
 
             foreach (var session in sessions)
                 SessionsSpreadsheetWithFilters.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);

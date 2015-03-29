@@ -38,6 +38,7 @@
             this.Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.FiltersTab = new System.Windows.Forms.TabPage();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
@@ -52,7 +53,8 @@
             this.BeginTrackButton = new System.Windows.Forms.Button();
             this.FinishTrackButton = new System.Windows.Forms.Button();
             this.ImportButton = new System.Windows.Forms.Button();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SpreadsheetTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SessionsSpreadsheet)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -151,6 +153,8 @@
             // 
             // FiltersTab
             // 
+            this.FiltersTab.Controls.Add(this.textBox1);
+            this.FiltersTab.Controls.Add(this.label3);
             this.FiltersTab.Controls.Add(this.checkedListBox1);
             this.FiltersTab.Controls.Add(this.label2);
             this.FiltersTab.Controls.Add(this.label1);
@@ -166,10 +170,18 @@
             this.FiltersTab.Text = "Filters";
             this.FiltersTab.UseVisualStyleBackColor = true;
             // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(390, 133);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(186, 259);
+            this.checkedListBox1.TabIndex = 8;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(438, 60);
+            this.label2.Location = new System.Drawing.Point(437, 42);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 7;
@@ -178,7 +190,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(414, 3);
+            this.label1.Location = new System.Drawing.Point(421, 3);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 13);
             this.label1.TabIndex = 6;
@@ -186,7 +198,7 @@
             // 
             // dateTimePicker2
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(390, 76);
+            this.dateTimePicker2.Location = new System.Drawing.Point(390, 58);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(188, 20);
             this.dateTimePicker2.TabIndex = 5;
@@ -283,13 +295,21 @@
             this.ImportButton.UseVisualStyleBackColor = true;
             this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
             // 
-            // checkedListBox1
+            // label3
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(390, 103);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(186, 289);
-            this.checkedListBox1.TabIndex = 8;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(403, 81);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(145, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Window Title Contains Word:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(390, 104);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(185, 20);
+            this.textBox1.TabIndex = 10;
             // 
             // MainWindow
             // 
@@ -346,6 +366,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label3;
     }
 }
 
