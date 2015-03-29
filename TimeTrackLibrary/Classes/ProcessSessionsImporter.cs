@@ -14,7 +14,6 @@ namespace TimeTrackLibrary.Classes
                 {
                     String[] sessions;
 
-
                     while (!streamReader.EndOfStream)
                     {
                         sessions = (streamReader.ReadLine() + streamReader.ReadLine()).Split('=', '\t', '\n');

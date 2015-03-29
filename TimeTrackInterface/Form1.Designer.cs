@@ -327,7 +327,7 @@
             this.Controls.Add(this.HideInTrayButton);
             this.MinimumSize = new System.Drawing.Size(506, 326);
             this.Name = "MainWindow";
-            this.Text = "TimeSpy";
+            this.Text = "TimeTrack";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.SpreadsheetTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SessionsSpreadsheet)).EndInit();
