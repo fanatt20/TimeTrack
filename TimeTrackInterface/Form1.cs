@@ -179,7 +179,7 @@ namespace WinFormsInterface
             var processNameCollection = from session in repo.Get()
                                         group session by session.ProcessName into s
                                         select s.Key;
-
+            checkedListBox1.Items.Clear();
             foreach (var item in processNameCollection)
                 checkedListBox1.Items.Add(item);
 
