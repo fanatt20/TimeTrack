@@ -39,15 +39,11 @@ namespace TimeTrackLibrary.Classes
                                                 (new BinaryFormatter()).Deserialize(stream)).Get())
                             repo.Add(sesion);
                     }
-                    catch(System.Runtime.Serialization.SerializationException){ }
+                    catch (System.Runtime.Serialization.SerializationException) { }
 
                 }
-
-
             }
         }
-
-
     }
 }
 

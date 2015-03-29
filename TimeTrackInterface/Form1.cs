@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using TimeTrackLibrary.Classes;
 
@@ -26,8 +27,8 @@ namespace WinFormsInterface
 
             ProcessSessionsImporter.DeserializeFromFile(repo, "Data");
             ShowStatisticButton_Click(new object(), new EventArgs());
-
         }
+
 
         private void OnExit(object sender, EventArgs e)
         {
@@ -75,12 +76,10 @@ namespace WinFormsInterface
         {
             this.Invoke((MethodInvoker)delegate
             {
-                dataGridView1.Rows.Clear();
+                SessionsSpreadsheet.Rows.Clear();
 
                 foreach (var session in repo.Get())
-                {
-                    dataGridView1.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);
-                }
+                    SessionsSpreadsheet.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);
             });
         }
 
@@ -92,12 +91,10 @@ namespace WinFormsInterface
         }
         private void ShowStatisticButton_Click(object sender, EventArgs e)
         {
-
-            dataGridView1.Rows.Clear();
+            SessionsSpreadsheet.Rows.Clear();
             foreach (var session in repo.Get())
-            {
-                dataGridView1.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);
-            }
+                SessionsSpreadsheet.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);
+
         }
 
         private void ExportButton_Click(object sender, EventArgs e)
@@ -143,21 +140,34 @@ namespace WinFormsInterface
             ShowStatisticButton_Click(null, null);
         }
 
-        private void SerializeButton_Click(object sender, EventArgs e)
-        {
-            ProcessSessionsExporter.SerializeIntoFile(repo, "Data");
-
-        }
-
-        private void DeserializeButton_Click(object sender, EventArgs e)
-        {
-            ProcessSessionsImporter.DeserializeFromFile(repo, "Data");
-        }
-
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             ProcessSessionsExporter.SerializeIntoFile(repo, "Data");
         }
 
+        private void SubmitButton_Click(object sender, EventArgs e)
+        {
+            SessionsSpreadsheetWithFilters.Rows.Clear();
+            var processFilter = checkedListBox1.CheckedItems;
+
+            var sessions = from session in repo.Get()
+                           where processFilter.Contains(session.ProcessName) &&
+                                 (dateTimePicker1.Value < session.StartAt && dateTimePicker2.Value >= session.StartAt)
+                           select session;
+
+            foreach (var session in sessions)
+                SessionsSpreadsheetWithFilters.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);
+        }
+
+        private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            var processNameCollection = from session in repo.Get()
+                                        group session by session.ProcessName into s
+                                        select s.Key;
+
+            foreach (var item in processNameCollection)
+                checkedListBox1.Items.Add(item);
+
+        }
     }
 }
