@@ -27,6 +27,7 @@ namespace WinFormsInterface
 
             ProcessSessionsImporter.DeserializeFromFile(repo, "Data");
             ShowStatisticButton_Click(new object(), new EventArgs());
+            dateTimePicker1.Value = repo.Get().AsEnumerable<ProcessSession>().Min<ProcessSession>().StartAt.Date;
         }
 
 
@@ -150,21 +151,17 @@ namespace WinFormsInterface
             SessionsSpreadsheetWithFilters.Rows.Clear();
             var processFilter = checkedListBox1.CheckedItems;
 
-            var sessions = repo.Get();
-
-            if (processFilter.Count != 0)
-                sessions = from session in sessions
-                           where processFilter.Contains(session.ProcessName)
-                           select session;
-
-            if (dateTimePicker1.Value.Date != DateTime.Now.Date && dateTimePicker2.Value.Date != DateTime.Now.Date)
-                sessions = from session in sessions
-                           where
-                              session.StartAt.Date >= dateTimePicker1.Value.Date
+            var sessions = from session in repo.Get()
+                           where session.StartAt.Date >= dateTimePicker1.Value.Date
                            && session.StartAt.Date <= dateTimePicker2.Value.Date
                            select session;
 
-            if (!String.IsNullOrEmpty(textBox1.Text))
+            if (processFilter.Count != 0)
+                sessions = from session in sessions
+                           where processFilter.Contains(session.ProcessName)                                                       
+                           select session;
+
+                        if (!String.IsNullOrEmpty(textBox1.Text))
                 sessions = from session in sessions
                            where session.WindowTitle.Contains(textBox1.Text)
                            select session;
