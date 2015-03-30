@@ -66,10 +66,10 @@ namespace TimeTrackLibrary.Classes
                 {
                     foreach (var session in repo.Get())
                     {
-                        streamWriter.WriteLine(session.ProcessName
-                            + "," + session.WindowTitle.Trim()
-                            + "," + session.StartAt
-                            + "," + session.Duration);
+                        streamWriter.WriteLine("\""+session.ProcessName
+                            + "\",\"" + session.WindowTitle.Trim()
+                            + "\",\"" + session.StartAt
+                            + "\",\"" + session.Duration+"\"");
                     }
                 }
             }

@@ -38,6 +38,8 @@
             this.Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.FiltersTab = new System.Windows.Forms.TabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -53,8 +55,6 @@
             this.BeginTrackButton = new System.Windows.Forms.Button();
             this.FinishTrackButton = new System.Windows.Forms.Button();
             this.ImportButton = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SpreadsheetTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SessionsSpreadsheet)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -169,6 +169,22 @@
             this.FiltersTab.TabIndex = 4;
             this.FiltersTab.Text = "Filters";
             this.FiltersTab.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(390, 104);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(185, 20);
+            this.textBox1.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(403, 81);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(145, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Window Title Contains Word:";
             // 
             // checkedListBox1
             // 
@@ -294,22 +310,6 @@
             this.ImportButton.Text = "Import";
             this.ImportButton.UseVisualStyleBackColor = true;
             this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(403, 81);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(145, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Window Title Contains Word:";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(390, 104);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(185, 20);
-            this.textBox1.TabIndex = 10;
             // 
             // MainWindow
             // 
