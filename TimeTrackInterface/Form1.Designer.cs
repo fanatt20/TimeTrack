@@ -105,7 +105,7 @@
             this.WindowTitle,
             this.StartAt,
             this.Duration});
-            this.SessionsSpreadsheet.Location = new System.Drawing.Point(0, 0);
+            this.SessionsSpreadsheet.Location = new System.Drawing.Point(0, 3);
             this.SessionsSpreadsheet.Name = "SessionsSpreadsheet";
             this.SessionsSpreadsheet.ReadOnly = true;
             this.SessionsSpreadsheet.Size = new System.Drawing.Size(578, 465);
@@ -271,7 +271,7 @@
             // 
             // ExportButton
             // 
-            this.ExportButton.Location = new System.Drawing.Point(505, 509);
+            this.ExportButton.Location = new System.Drawing.Point(505, 510);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(93, 39);
             this.ExportButton.TabIndex = 1;

@@ -8,9 +8,14 @@ namespace TimeTrackLibrary.Classes
         public IProcessSessionGenerator Generator { get; private set; }
         public void StartWatch(IProcessSessionRepository repo, IProcessSessionGenerator gen)
         {
-            Repository = repo;
-            Generator = gen;
-            Generator.ProcessChanged += OnProcessSessionChanged;
+            if (!Watching)
+            {
+                Watching = true;
+
+                Repository = repo;
+                Generator = gen;
+                Generator.ProcessChanged += OnProcessSessionChanged;
+            }
         }
 
         private void OnProcessSessionChanged(IProcessSession session)
@@ -20,9 +25,21 @@ namespace TimeTrackLibrary.Classes
         }
         public void StopWatch()
         {
-            Generator.CancelGeneration();
-            Generator.ProcessChanged -= OnProcessSessionChanged;
+            if (Watching)
+            {
+                Generator.CancelGeneration();
+                Generator.ProcessChanged -= OnProcessSessionChanged;
+
+                Watching = false;
+            }
         }
 
+
+
+        public bool Watching
+        {
+            get;
+            private set;
+        }
     }
 }

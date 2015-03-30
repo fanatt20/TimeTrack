@@ -8,6 +8,7 @@ namespace TimeTrackLibrary.Interfaces
    public interface IProcessSessionWatcher
     {
          void StartWatch(IProcessSessionRepository repo, IProcessSessionGenerator gen);
+         bool Watching { get;}
          void StopWatch();
     }
 }
