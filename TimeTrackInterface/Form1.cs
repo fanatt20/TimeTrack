@@ -104,7 +104,7 @@ namespace WinFormsInterface
         private void ExportButton_Click(object sender, EventArgs e)
         {
             var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text File|.txt|Excel File 1999-2003|.xls|CSV|.csv";
+            saveFileDialog.Filter = "TXT File|.txt|CSV|.csv";
             saveFileDialog.Title = "Save File";
             saveFileDialog.ShowDialog();
 
@@ -118,9 +118,6 @@ namespace WinFormsInterface
                             ProcessSessionsExporter.ExportAsText(repo, saveFileDialog.FileName);
                             break;
                         case 2:
-                            ProcessSessionsExporter.ExportAsExcel(repo, saveFileDialog.FileName);
-                            break;
-                        case 3:
                             ProcessSessionsExporter.ExportAsCSV(repo, saveFileDialog.FileName);
                             break;
                     }
