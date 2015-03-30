@@ -26,7 +26,8 @@ namespace WinFormsInterface
             InitializeComponent();
 
             ProcessSessionsImporter.DeserializeFromFile(repo, "Data");
-            ShowStatisticButton_Click(new object(), new EventArgs());
+            ShowStatisticButton_Click(null, null);
+            BeginTrackButton_Click(null, null);
             if (repo.Get().Count() != 0)
                 dateTimePicker1.Value = repo.Get().AsEnumerable<ProcessSession>().Min<ProcessSession>().StartAt.Date;
         }
@@ -145,6 +146,7 @@ namespace WinFormsInterface
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
+            FinishTrackButton_Click(null, null);
             ProcessSessionsExporter.SerializeIntoFile(repo, "Data");
         }
 
