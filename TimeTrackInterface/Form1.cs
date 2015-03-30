@@ -111,7 +111,7 @@ namespace WinFormsInterface
             if (saveFileDialog.FileName != "")
             {
                 try
-                {
+                { 
                     switch (saveFileDialog.FilterIndex)
                     {
                         case 1:
