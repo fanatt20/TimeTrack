@@ -47,11 +47,6 @@ namespace TimeTrackLibrary.Classes
 
         public bool HaveSameProcessNameAndWindowTitle(IProcessSession other)
         {
-            return IsSameProcessAs((ProcessSession) other);
-        }
-
-        public bool IsSameProcessAs(ProcessSession other)
-        {
             return (ProcessName == other.ProcessName && WindowTitle == other.WindowTitle);
         }
 
