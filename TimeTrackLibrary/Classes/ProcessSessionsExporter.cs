@@ -2,8 +2,6 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using TimeTrackLibrary.Interfaces;
-using Excel = Microsoft.Office.Interop.Excel;
-
 
 namespace TimeTrackLibrary.Classes
 {
@@ -26,38 +24,6 @@ namespace TimeTrackLibrary.Classes
             }
         }
 
-        static public void ExportAsExcel(IProcessSessionRepository repo, string pathAndName)
-        {
-            Excel.Application xlApp;
-            Excel.Workbook xlWorkBook;
-            Excel.Worksheet xlWorkSheet;
-            object misValue = System.Reflection.Missing.Value;
-
-            xlApp = new Excel.Application();
-            xlWorkBook = xlApp.Workbooks.Add(misValue);
-            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-            int rCnt = 1;
-            xlWorkSheet.Cells[rCnt, 1] = "Process Name";
-            xlWorkSheet.Cells[rCnt, 2] = "Window Title";
-            xlWorkSheet.Cells[rCnt, 3] = "Start At";
-            xlWorkSheet.Cells[rCnt, 4] = "Duration";
-
-            rCnt++;
-
-            foreach (var session in repo.Get())
-            {
-                xlWorkSheet.Cells[rCnt, 1] = session.ProcessName;
-                xlWorkSheet.Cells[rCnt, 2] = session.WindowTitle;
-                xlWorkSheet.Cells[rCnt, 3] = session.StartAt.ToString();
-                xlWorkSheet.Cells[rCnt, 4] = session.Duration.ToString();
-                rCnt++;
-            }
-
-            xlWorkBook.SaveAs(pathAndName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
-
-            xlWorkBook.Close(true, misValue, misValue);
-            xlApp.Quit();
-        }
         static public void ExportAsCSV(IProcessSessionRepository repo, string pathAndName)
         {
             if (pathAndName != "" && repo != null)

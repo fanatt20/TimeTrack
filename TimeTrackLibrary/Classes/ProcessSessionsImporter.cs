@@ -22,20 +22,21 @@ namespace TimeTrackLibrary.Classes
                     }
                 }
         }
+
+        public static void ImportFromCSV(IProcessSessionRepository repo, string pathAndName)
+        {
+
+        }
         static public void DeserializeFromFile(IProcessSessionRepository repo, string pathAndName)
         {
             if (!String.IsNullOrEmpty(pathAndName))
             {
 
-                using (var stream = FileStream.Synchronized(new FileStream(pathAndName,
-                                                                      FileMode.OpenOrCreate, FileAccess.Read,
-                                                                      FileShare.Read,
-                                                                      bufferSize: 4096, useAsync: true)))
+                using (var stream = new FileStream(pathAndName, FileMode.OpenOrCreate))
                 {
                     try
                     {
-                        foreach (var sesion in ((IProcessSessionRepository)
-                                                (new BinaryFormatter()).Deserialize(stream)).Get())
+                        foreach (var sesion in ((IProcessSessionRepository)(new BinaryFormatter()).Deserialize(stream)).Get())
                             repo.Add(sesion);
                     }
                     catch (System.Runtime.Serialization.SerializationException) { }

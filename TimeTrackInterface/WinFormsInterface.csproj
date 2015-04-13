@@ -45,12 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Charts.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Charts.Designer.cs">
-      <DependentUpon>Charts.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,9 +53,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Charts.resx">
-      <DependentUpon>Charts.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -85,7 +76,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UpdatedTimeTrackLibrary\TimeTrackLibrary.csproj">
+    <ProjectReference Include="..\TimeTrackLibrary\TimeTrackLibrary.csproj">
       <Project>{a31bdc4b-2d58-4df4-a4d7-8ea9a5ca2347}</Project>
       <Name>TimeTrackLibrary</Name>
     </ProjectReference>
