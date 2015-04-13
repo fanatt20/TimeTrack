@@ -19,7 +19,7 @@ namespace TimeTrackLibrary.Classes
 
         public IProcessSession GetCurrentProcessSession()
         {
-            IntPtr handle = GetForegroundWindow();
+            var handle = GetForegroundWindow();
             int lProcessId;
             GetWindowThreadProcessId(handle, out lProcessId);
 
@@ -30,7 +30,7 @@ namespace TimeTrackLibrary.Classes
             var text = new StringBuilder(count);
             if (GetWindowText(handle, text, count) > 0)
             {
-                currentProcessWindowTitle += "\n" + text.ToString();
+                currentProcessWindowTitle += text.ToString();
             }
             IProcessSession result= new ProcessSession() { WindowTitle = currentProcessWindowTitle, ProcessName = currentProcess.ProcessName };
             return result;

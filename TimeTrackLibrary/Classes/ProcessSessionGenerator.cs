@@ -17,7 +17,7 @@ namespace TimeTrackLibrary.Classes
                 ProcessChanged(session);
 
         }
-        Timer timer;
+        Timer _timer;
 
         public TimeSpan Interval { get; private set; }
         public IProcessSession CurrentProcess { get; private set; }
@@ -30,7 +30,7 @@ namespace TimeTrackLibrary.Classes
             Interval = interval;
             RegistredProcess = _provider.GetCurrentProcessSession();
             RegistredProcess.StartAt = DateTime.Now;
-            timer = new Timer(new TimerCallback(TrackCurrentProcesses), null, new TimeSpan(0, 0, 0), interval);
+            _timer = new Timer(new TimerCallback(TrackCurrentProcesses), null, new TimeSpan(0, 0, 0), interval);
         }
 
         private void TrackCurrentProcesses(object state)
@@ -52,15 +52,15 @@ namespace TimeTrackLibrary.Classes
 
         public void CancelGeneration()
         {
-            if (timer != null)
-                timer.Dispose();
+            if (_timer != null)
+                _timer.Dispose();
         }
 
 
         public void Dispose()
         {
-            if (timer != null)
-                timer.Dispose();
+            if (_timer != null)
+                _timer.Dispose();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using TimeTrackLibrary.Interfaces;
 
@@ -7,41 +8,35 @@ namespace TimeTrackLibrary.Classes
 {
     public class ProcessSessionsImporter
     {
-        public static void ImportFromText(IProcessSessionRepository repo, string pathAndName)
-        {
-            if (!String.IsNullOrEmpty(pathAndName))
-                using (var streamReader = new StreamReader(pathAndName))
-                {
-                    String[] sessions;
-
-                    while (!streamReader.EndOfStream)
-                    {
-                        sessions = (streamReader.ReadLine() + streamReader.ReadLine()).Split('=', '\t', '\n');
-                        repo.Add(new ProcessSession(sessions[1], sessions[3], DateTime.Parse(sessions[5]), TimeSpan.Parse(sessions[7])));
-
-                    }
-                }
-        }
-
         public static void ImportFromCSV(IProcessSessionRepository repo, string pathAndName)
         {
+            if (String.IsNullOrEmpty(pathAndName)) return;
+
+            using (var streamReader = new StreamReader(pathAndName))
+            {
+                while (!streamReader.EndOfStream)
+                {
+                    var str = streamReader.ReadLine().Split(new string[] { "\",\"" }, StringSplitOptions.None);
+                    repo.Add(new ProcessSession(str[0].Remove(0, 1), str[1], DateTime.Parse(str[2]), TimeSpan.Parse(str[3].Remove(str[3].Length - 1))));
+                }
+            }
 
         }
         static public void DeserializeFromFile(IProcessSessionRepository repo, string pathAndName)
         {
-            if (!String.IsNullOrEmpty(pathAndName))
+            if (String.IsNullOrEmpty(pathAndName) || !File.Exists(pathAndName)) return;
+            using (var stream = new FileStream(pathAndName, FileMode.Open))
             {
 
-                using (var stream = new FileStream(pathAndName, FileMode.OpenOrCreate))
+                try
                 {
-                    try
-                    {
-                        foreach (var sesion in ((IProcessSessionRepository)(new BinaryFormatter()).Deserialize(stream)).Get())
-                            repo.Add(sesion);
-                    }
-                    catch (System.Runtime.Serialization.SerializationException) { }
-
+                    var repository =
+                       (IProcessSessionRepository)(new BinaryFormatter()).Deserialize(stream);
+                    foreach (var sesion in repository.Get())
+                        repo.Add(sesion);
                 }
+                catch (SerializationException) { }
+                catch (ArgumentNullException) { }
             }
         }
     }

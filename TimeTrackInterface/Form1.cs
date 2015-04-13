@@ -8,15 +8,15 @@ namespace WinFormsInterface
 {
     public partial class MainWindow : Form
     {
-        private NotifyIcon trayIcon;
-        private ContextMenu trayMenu;
-        private TimeSpan interval = new TimeSpan(0, 0, 1);
+        private NotifyIcon _trayIcon;
+        private ContextMenu _trayMenu;
+        private TimeSpan _interval = new TimeSpan(0, 0, 1);
 
 
-        ProcessSessionRepository repo = new ProcessSessionRepository();
-        ProcessSessionGenerator generator = new ProcessSessionGenerator();
-        ProcessSessionWatcher watcher = new ProcessSessionWatcher();
-        ProcessSessionProvider provider = new ProcessSessionProvider();
+        ProcessSessionRepository _repo = new ProcessSessionRepository();
+        ProcessSessionGenerator _generator = new ProcessSessionGenerator();
+        ProcessSessionWatcher _watcher = new ProcessSessionWatcher();
+        ProcessSessionProvider _provider = new ProcessSessionProvider();
 
 
 
@@ -25,11 +25,11 @@ namespace WinFormsInterface
         {
             InitializeComponent();
 
-            ProcessSessionsImporter.DeserializeFromFile(repo, "Data");
+            ProcessSessionsImporter.DeserializeFromFile(_repo, "Data");
             ShowStatisticButton_Click(null, null);
             BeginTrackButton_Click(null, null);
-            if (repo.Get().Count() != 0)
-                dateTimePicker1.Value = repo.Get().AsEnumerable<ProcessSession>().Min<ProcessSession>().StartAt.Date;
+            if (_repo.Get().Count() != 0)
+                dateTimePicker1.Value = _repo.Get().AsEnumerable<ProcessSession>().Min<ProcessSession>().StartAt.Date;
         }
 
 
@@ -39,7 +39,7 @@ namespace WinFormsInterface
         }
         private void OnRestore(object sender, EventArgs e)
         {
-            trayIcon.Visible = false;
+            _trayIcon.Visible = false;
             this.Visible = true;
         }
         private void OnFinishTracking(object sender, EventArgs e)
@@ -51,28 +51,28 @@ namespace WinFormsInterface
         private void HideInTrayButton_Click(object sender, EventArgs e)
         {
 
-            trayMenu = new ContextMenu();
-            trayMenu.MenuItems.Add("Exit", OnExit);
-            trayMenu.MenuItems.Add("Restore", OnRestore);
-            trayMenu.MenuItems.Add("Finish Tracking", OnFinishTracking);
+            _trayMenu = new ContextMenu();
+            _trayMenu.MenuItems.Add("Exit", OnExit);
+            _trayMenu.MenuItems.Add("Restore", OnRestore);
+            _trayMenu.MenuItems.Add("Finish Tracking", OnFinishTracking);
 
 
-            trayIcon = new NotifyIcon();
-            trayIcon.Text = "TimeTrack";
-            trayIcon.Icon = new Icon(SystemIcons.Asterisk, 40, 40);
+            _trayIcon = new NotifyIcon();
+            _trayIcon.Text = "TimeTrack";
+            _trayIcon.Icon = new Icon(SystemIcons.Asterisk, 40, 40);
 
 
-            trayIcon.ContextMenu = trayMenu;
-            trayIcon.Visible = true;
+            _trayIcon.ContextMenu = _trayMenu;
+            _trayIcon.Visible = true;
             this.Visible = false;
         }
 
         private void BeginTrackButton_Click(object sender, EventArgs e)
         {
 
-            watcher.StartWatch(repo, generator);
-            generator.BeginGeneration(interval, provider);
-            generator.ProcessChanged += Generator_ProcessChanged;
+            _watcher.StartWatch(_repo, _generator);
+            _generator.BeginGeneration(_interval, _provider);
+            _generator.ProcessChanged += Generator_ProcessChanged;
 
         }
 
@@ -82,21 +82,21 @@ namespace WinFormsInterface
             {
                 SessionsSpreadsheet.Rows.Clear();
 
-                foreach (var session in repo.Get())
+                foreach (var session in _repo.Get())
                     SessionsSpreadsheet.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);
             });
         }
 
         private void FinishTrackButton_Click(object sender, EventArgs e)
         {
-            watcher.StopWatch();
-            generator.ProcessChanged -= Generator_ProcessChanged;
+            _watcher.StopWatch();
+            _generator.ProcessChanged -= Generator_ProcessChanged;
 
         }
         private void ShowStatisticButton_Click(object sender, EventArgs e)
         {
             SessionsSpreadsheet.Rows.Clear();
-            foreach (var session in repo.Get())
+            foreach (var session in _repo.Get())
                 SessionsSpreadsheet.Rows.Add(session.ProcessName, session.WindowTitle, session.StartAt, session.Duration);
 
         }
@@ -104,7 +104,7 @@ namespace WinFormsInterface
         private void ExportButton_Click(object sender, EventArgs e)
         {
             var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "TXT File|.txt|CSV|.csv";
+            saveFileDialog.Filter = "TXT File|*.txt|CSV|*.csv";
             saveFileDialog.Title = "Save File";
             saveFileDialog.ShowDialog();
 
@@ -115,10 +115,10 @@ namespace WinFormsInterface
                     switch (saveFileDialog.FilterIndex)
                     {
                         case 1:
-                            ProcessSessionsExporter.ExportAsText(repo, saveFileDialog.FileName);
+                            ProcessSessionsExporter.ExportAsText(_repo, saveFileDialog.FileName);
                             break;
                         case 2:
-                            ProcessSessionsExporter.ExportAsCSV(repo, saveFileDialog.FileName);
+                            ProcessSessionsExporter.ExportAsCSV(_repo, saveFileDialog.FileName);
                             break;
                     }
                 }
@@ -133,10 +133,11 @@ namespace WinFormsInterface
         {
             using (var openFile = new OpenFileDialog())
             {
-                openFile.Title = "Text File";
+                openFile.Title = "CSV File";
+                openFile.Filter = "CSV|*.csv";
                 openFile.ShowDialog();
                 if (openFile.FileName != "")
-                    ProcessSessionsImporter.ImportFromText(repo, openFile.FileName);
+                    ProcessSessionsImporter.ImportFromCSV(_repo, openFile.FileName);
             }
             ShowStatisticButton_Click(null, null);
         }
@@ -144,7 +145,7 @@ namespace WinFormsInterface
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             FinishTrackButton_Click(null, null);
-            ProcessSessionsExporter.SerializeIntoFile(repo, "Data");
+            ProcessSessionsExporter.SerializeIntoFile(_repo, "Data");
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
@@ -152,7 +153,7 @@ namespace WinFormsInterface
             SessionsSpreadsheetWithFilters.Rows.Clear();
             var processFilter = checkedListBox1.CheckedItems;
 
-            var sessions = from session in repo.Get()
+            var sessions = from session in _repo.Get()
                            where session.StartAt.Date >= dateTimePicker1.Value.Date
                            && session.StartAt.Date <= dateTimePicker2.Value.Date
                            select session;
@@ -174,7 +175,7 @@ namespace WinFormsInterface
 
         private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            var processNameCollection = from session in repo.Get()
+            var processNameCollection = from session in _repo.Get()
                                         group session by session.ProcessName into s
                                         select s.Key;
             checkedListBox1.Items.Clear();

@@ -8,33 +8,33 @@ namespace TimeTrackLibrary.Classes
     [Serializable]
     public sealed class ProcessSessionRepository : IProcessSessionRepository, IDisposable
     {
-        List<ProcessSession> dataBase = new List<ProcessSession>();
+        List<ProcessSession> _dataBase = new List<ProcessSession>();
         public IQueryable<ProcessSession> Get()
         {
-            return dataBase.AsQueryable();
+            return _dataBase.AsQueryable();
         }
 
         public void Add(ProcessSession session)
         {
-            if (!dataBase.Contains(session))
-                dataBase.Add(session);
+            if (!_dataBase.Contains(session))
+                _dataBase.Add(session);
         }
 
         public void Update(ProcessSession oldSession, ProcessSession newSession)
         {
-            dataBase.Remove(oldSession);
-            dataBase.Add(newSession);
+            _dataBase.Remove(oldSession);
+            _dataBase.Add(newSession);
         }
 
         public void Dispose()
         {
-            dataBase.Clear();
+            _dataBase.Clear();
             GC.SuppressFinalize(this);
         }
 
         IQueryable<IProcessSession> IProcessSessionRepository.Get()
         {
-            return dataBase.AsQueryable<IProcessSession>();
+            return _dataBase.AsQueryable<IProcessSession>();
         }
 
         public void Add(IProcessSession session)
@@ -45,8 +45,8 @@ namespace TimeTrackLibrary.Classes
 
         public void Update(IProcessSession oldSession, IProcessSession newSession)
         {
-            if (dataBase.Contains((ProcessSession)oldSession))
-                dataBase.Remove((ProcessSession)oldSession);
+            if (_dataBase.Contains((ProcessSession)oldSession))
+                _dataBase.Remove((ProcessSession)oldSession);
             this.Add(newSession);
 
         }
