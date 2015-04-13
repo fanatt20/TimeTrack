@@ -6,6 +6,7 @@ namespace TimeTrackLibrary.Classes
     {
         public IProcessSessionRepository Repository { get; private set; }
         public IProcessSessionGenerator Generator { get; private set; }
+
         public void StartWatch(IProcessSessionRepository repo, IProcessSessionGenerator gen)
         {
             if (Watching) return;
@@ -17,11 +18,6 @@ namespace TimeTrackLibrary.Classes
             Generator.ProcessChanged += OnProcessSessionChanged;
         }
 
-        private void OnProcessSessionChanged(IProcessSession session)
-        {
-            Repository.Add(session);
-
-        }
         public void StopWatch()
         {
             if (!Watching) return;
@@ -32,12 +28,11 @@ namespace TimeTrackLibrary.Classes
             Watching = false;
         }
 
+        public bool Watching { get; private set; }
 
-
-        public bool Watching
+        private void OnProcessSessionChanged(IProcessSession session)
         {
-            get;
-            private set;
+            Repository.Add(session);
         }
     }
 }

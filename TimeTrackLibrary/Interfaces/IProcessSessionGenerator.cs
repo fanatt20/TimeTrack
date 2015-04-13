@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace TimeTrackLibrary.Interfaces
 {
@@ -10,7 +7,5 @@ namespace TimeTrackLibrary.Interfaces
         event Action<IProcessSession> ProcessChanged;
         void BeginGeneration(TimeSpan interval, IProcessSessionProvider provider);
         void CancelGeneration();
-
-
     }
 }
